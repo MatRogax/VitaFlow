@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "pdT7b1s87x0=",
+  "success": true,
+  "projectFilePath": "/home/matheusr/RiderProjects/projeto carlos/VitaFlow/VitaFlow.csproj",
+  "expectedPackageFiles": [
+    "/home/matheusr/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.3/microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

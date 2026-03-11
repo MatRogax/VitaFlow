@@ -1,0 +1,53 @@
+@using projeto_carlos.Enums
+
+<div class="mb-4">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="block text-sm font-semibold text-gray-800 mb-2">@Label</label>
+    }
+
+    <div class="flex p-1 space-x-1 bg-gray-100/80 rounded-xl">
+        
+        <button 
+            type="button"
+            class="@GetButtonClasses(EProfileType.Patient)"
+            @onclick="() => SelectRole(EProfileType.Patient)">
+            Beneficiário
+        </button>
+
+        <button 
+            type="button"
+            class="@GetButtonClasses(EProfileType.Psychologist)"
+            @onclick="() => SelectRole(EProfileType.Psychologist)">
+            Psicólogo Voluntário
+        </button>
+
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    
+    [Parameter] public EProfileType Value { get; set; } = EProfileType.Patient; 
+    [Parameter] public EventCallback<EProfileType> ValueChanged { get; set; }
+
+    private async Task SelectRole(EProfileType role)
+    {
+        Value = role;
+        await ValueChanged.InvokeAsync(Value);
+    }
+    
+    private string GetButtonClasses(EProfileType role)
+    {
+        var baseClasses = "w-full py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none";
+        
+        if (Value == role)
+        {
+            return $"{baseClasses} bg-white text-gray-900 shadow-sm ring-1 ring-gray-200/50";
+        }
+        else
+        {
+            return $"{baseClasses} text-gray-500 hover:text-gray-700 hover:bg-gray-200/50";
+        }
+    }
+}

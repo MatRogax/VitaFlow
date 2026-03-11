@@ -1,0 +1,107 @@
+@page "/cadastro"
+@using projeto_carlos.Components.UI
+@using projeto_carlos.Components.Layout
+@using projeto_carlos.Enums
+@using projeto_carlos.Models
+@using projeto_carlos.Models.ViewModels
+@layout AuthLayout
+
+@inject NavigationManager NavManager
+
+<div class="flex flex-col w-full max-w-4xl mx-auto shadow-xl rounded-3xl overflow-hidden min-h-[650px]">
+    
+    <div class="flex justify-between items-center bg-white p-6 border-b border-gray-100">
+        <div class="flex items-center space-x-2 font-bold text-slate-800 text-xl">
+            <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 17.5c-4.274 0-7.75-3.476-7.75-7.75S7.726 4.25 12 4.25s7.75 3.476 7.75 7.75-3.476 7.75-7.75 7.75zm-1-12.5h2v6h-2zm0 8h2v2h-2z" />
+            </svg>
+            <span>VitaFlow</span>
+        </div>
+        <div class="flex items-center space-x-4 text-sm font-medium">
+            <span class="text-gray-400 hidden sm:block">Já tem uma conta?</span>
+            <Button Variant="EButtonVariant.Outline" OnClick="IrParaLogin" CssClass="!py-2">
+                Entrar
+            </Button>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 md:p-12 flex-grow flex items-center justify-center">
+        <div class="w-full max-w-md">
+            
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Criar Conta</h2>
+            <p class="text-slate-500 text-sm mb-8 font-medium">Junte-se à nossa comunidade de cuidado e apoio emocional.</p>
+
+            <form @onsubmit="FinalizarCadastro" class="space-y-5">
+                
+                <SegmentedToggle 
+                    Label="Eu sou:" 
+                    @bind-Value="_registerViewModel.Perfil" />
+
+                <Input 
+                    Label="Nome Completo" 
+                    Placeholder="Como quer ser chamado?" 
+                    @bind-Value="_registerViewModel.Nome" />
+
+                <Input 
+                    Label="E-mail" 
+                    Type="email"
+                    Placeholder="exemplo@email.com" 
+                    @bind-Value="_registerViewModel.Email" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                        Label="Senha" 
+                        IsPassword="true"
+                        Placeholder="••••••••" 
+                        @bind-Value="_registerViewModel.Senha" />
+
+                    <Input 
+                        Label="Confirmar Senha" 
+                        IsPassword="true"
+                        Placeholder="••••••••" 
+                        @bind-Value="_registerViewModel.ConfirmarSenha" />
+                </div>
+
+                <div class="flex items-start mt-2 mb-6">
+                    <div class="flex items-center h-5">
+                        <input id="termos" type="checkbox" @bind="_registerViewModel.AceitouTermos" class="w-4 h-4 border-gray-300 rounded text-blue-600 focus:ring-blue-500">
+                    </div>
+                    <label for="termos" class="ml-2 text-xs font-medium text-gray-500">
+                        Ao clicar em Cadastrar, você concorda com nossos <a href="#" class="text-blue-500 hover:underline">Termos de Uso</a> e <a href="#" class="text-blue-500 hover:underline">Política de Privacidade</a>.
+                    </label>
+                </div>
+
+                <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full shadow-md">
+                    Cadastrar &rarr;
+                </Button>
+                
+                <div class="text-center mt-8 text-xs text-gray-500 font-medium">
+                    Precisando de ajuda urgente? <span class="text-red-500 font-bold hover:underline cursor-pointer">Ligue CVV 188</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+    private readonly RegisterViewModel _registerViewModel = new();
+
+    private void IrParaLogin()
+    {
+        NavManager.NavigateTo("/login"); 
+    }
+
+    private void FinalizarCadastro()
+    {
+        if (!_registerViewModel.AceitouTermos)
+        {
+            Console.WriteLine("Erro: Você precisa aceitar os termos.");
+            return;
+        }
+
+        Console.WriteLine($"Cadastrando: {_registerViewModel.Nome}");
+        Console.WriteLine($"Perfil escolhido: {_registerViewModel.Perfil}");
+        
+    }
+    
+}
