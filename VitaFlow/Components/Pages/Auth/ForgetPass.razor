@@ -1,0 +1,91 @@
+@page "/recuperar-senha"
+@using projeto_carlos.Components.UI
+@using projeto_carlos.Components.Layout
+@using projeto_carlos.Enums
+@layout AuthLayout
+@inject NavigationManager NavManager
+
+<div class="max-w-5xl mx-auto w-full">
+    
+    <AuthHeader>
+        <RightContent>
+            <Button Variant="EButtonVariant.Text" OnClick="OpenHelp">
+                Precisa de ajuda?
+            </Button>
+        </RightContent>
+    </AuthHeader>
+
+    <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[550px]">
+        
+        <div class="w-full md:w-1/2 bg-gradient-to-br from-blue-50 to-blue-100 p-10 md:p-14 flex flex-col justify-between">
+            <div>
+                <IconCircle>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.436 3 11.996c0 2.29.982 4.364 2.578 5.864l-1.42 2.652c-.173.323.116.69.467.595l3.228-.871A9.038 9.038 0 0012 20.25z" />
+                    </svg>
+                </IconCircle>
+
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-800 leading-tight mb-4">
+                    Respire fundo, vamos te ajudar a recuperar seu acesso.
+                </h1>
+                <p class="text-slate-500 font-medium">
+                    Mantenha a calma. Em poucos passos você estará de volta à sua jornada de bem-estar.
+                </p>
+            </div>
+
+            <div class="mt-8 h-48 w-full bg-slate-300 rounded-2xl overflow-hidden shadow-inner"></div>
+        </div>
+
+        <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
+            
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Recuperar Senha</h2>
+            <p class="text-slate-500 text-sm mb-8">
+                Insira seu e-mail cadastrado e enviaremos um link para você criar uma nova senha.
+            </p>
+
+            <form @onsubmit="SendLink">
+                
+                <Input 
+                    Label="E-mail" 
+                    Type="email"
+                    Placeholder="seu@email.com" 
+                    @bind-Value="recoveryEmail" />
+
+                <div class="mt-6 mb-4">
+                    <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full shadow-md">
+                        Enviar Link de Recuperação &rarr;
+                    </Button>
+                </div>
+
+                <div class="text-center">
+                    <Button Variant="EButtonVariant.Ghost" Type="button" OnClick="ToBack" CssClass="w-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                        </svg>
+                        Voltar para o Login
+                    </Button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string recoveryEmail = string.Empty;
+
+    private void SendLink()
+    {
+        Console.WriteLine($"Link enviado para: {recoveryEmail}");
+    }
+
+    private void ToBack()
+    {
+        NavManager.NavigateTo("/login");
+    }
+
+    private void OpenHelp()
+    {
+        Console.WriteLine("Abrindo suporte...");
+    }
+}

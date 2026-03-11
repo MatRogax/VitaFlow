@@ -8,7 +8,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31702527-9bea-4843-a3c1-bdeef17a6610" name="Changes" comment="" />
+    <list default="true" id="31702527-9bea-4843-a3c1-bdeef17a6610" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.projeto carlos/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/ForgetPass.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/UI/Header.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/UI/IconCircle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/UI/IconCircle.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.projeto carlos/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.projeto carlos/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/Login.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/Models/Enums/EButtonVariant.cs" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/Models/Enums/EButtonVariant.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/VitaFlow.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/VitaFlow.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/ref/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/ref/VitaFlow.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/refint/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/refint/VitaFlow.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rpswa.dswa.cache.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +40,9 @@
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9d2f95d72fa884d8b6ddefc717c56da3657fbb2d5fb683656c3589eb6587/Debugger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/App.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -24,11 +50,15 @@
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Layout/MainLayout.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Layout/NavMenu.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Layout/ReconnectModal.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/ForgetPass.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/Login.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/Register.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/Routes.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/Button.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/DoctorCard.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/Header.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/IconCircle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/IconCircle.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/Input.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Components/UI/SegmentedToggle.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Models/Entities/Psychologist.cs" root0="FORCE_HIGHLIGHTING" />
@@ -38,29 +68,38 @@
     <setting file="file://$PROJECT_DIR$/VitaFlow/Models/ViewModels/RegisterViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/VitaFlow/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="3AmCHAGzq5E1UFAr0Dlg1G735sl" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.projeto carlos: http.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.projeto carlos: http.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.projeto carlos: http">
     <configuration name="projeto carlos: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/VitaFlow/VitaFlow.csproj" />
@@ -102,7 +141,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773188270302</updated>
-      <workItem from="1773188270519" duration="9954000" />
+      <workItem from="1773188270519" duration="11313000" />
     </task>
     <servers />
   </component>

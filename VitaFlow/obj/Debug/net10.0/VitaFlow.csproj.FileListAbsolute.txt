@@ -83,3 +83,4 @@
 /home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/VitaFlow.pdb
 /home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/VitaFlow.genruntimeconfig.cache
 /home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/ref/VitaFlow.dll
+/home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/VitaFlow.sourcelink.json

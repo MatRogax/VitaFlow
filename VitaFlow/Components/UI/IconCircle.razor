@@ -1,0 +1,13 @@
+@namespace projeto_carlos.Components.UI
+
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-blue-500 mb-6 @CssClass">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] 
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] 
+    public string CssClass { get; set; } = string.Empty; 
+}

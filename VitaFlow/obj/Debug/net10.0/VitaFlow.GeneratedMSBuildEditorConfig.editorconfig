@@ -30,6 +30,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvQXV0aExheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Auth/ForgetPass.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BdXRoL0ZvcmdldFBhc3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Auth/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BdXRoL0xvZ2luLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,6 +56,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/DoctorCard.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9Eb2N0b3JDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/Header.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9IZWFkZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/IconCircle.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9JY29uQ2lyY2xlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/Input.razor]
