@@ -1,0 +1,21 @@
+@using projeto_carlos.Enums
+@namespace projeto_carlos.Components.UI
+
+<div class="flex flex-col items-center justify-center p-10 bg-white rounded-2xl shadow-sm border border-slate-100 min-h-[400px]">
+    <div class="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-6">
+        <span class="material-symbols-outlined text-[40px]">menu_book</span>
+    </div>
+    <h3 class="text-2xl font-bold text-slate-900 mb-2">Nenhum registro no diário</h3>
+    <p class="text-slate-500 text-center mb-8 max-w-sm">
+        Comece a registrar como você está se sentindo. Pequenos desabafos podem melhorar seu dia.
+    </p>
+
+    <projeto_carlos.Components.UI.Button Variant="EButtonVariant.Primary" OnClick="OnNewEntry">
+        <span class="material-symbols-outlined mr-2">add</span>
+        Criar Novo Registro
+    </projeto_carlos.Components.UI.Button>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnNewEntry { get; set; }
+}

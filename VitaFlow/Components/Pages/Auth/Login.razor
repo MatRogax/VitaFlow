@@ -5,72 +5,102 @@
 @using projeto_carlos.Enums
 @using projeto_carlos.Models.ViewModels
 @layout AuthLayout 
+@rendermode InteractiveServer
 
-<div class="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
-    
-    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-blue-50 to-blue-100 flex-col justify-center items-center p-12 text-center">
-        <div class="w-24 h-24 bg-white rounded-3xl shadow-sm flex items-center justify-center mb-8">
-            <svg class="w-12 h-12 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 17.5c-4.274 0-7.75-3.476-7.75-7.75S7.726 4.25 12 4.25s7.75 3.476 7.75 7.75-3.476 7.75-7.75 7.75zm-1-12.5h2v6h-2zm0 8h2v2h-2z" />
-            </svg>
-        </div>
-        <h1 class="text-3xl font-bold text-slate-800 mb-4">VitaFlow</h1>
-        <p class="text-slate-500 italic font-medium">"Respire fundo, estamos aqui por você."</p>
-    </div>
-
-    <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
-        
-        <h2 class="text-2xl font-bold text-slate-800 mb-2">Bem-vindo de volta</h2>
-        <p class="text-slate-500 text-sm mb-8">Por favor, insira seus dados para acessar sua conta.</p>
-
-        <form @onsubmit="MakeLogin" class="space-y-5">
+<main class="flex-1 flex items-center justify-center p-4 md:p-8 py-12">
+    <div class="bg-bg-panel w-full max-w-5xl rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
             
-            <Input 
-                Label="E-mail" 
-                Type="email"
-                Placeholder="seu@email.com" 
-                @bind-Value="_loginModel.Email" />
-
-            <Input 
-                Label="Senha" 
-                IsPassword="true"
-                Placeholder="••••••••" 
-                @bind-Value="_loginModel.Password" />
-
-            <div class="flex justify-end mt-2 mb-8">
-                <Button Variant="EButtonVariant.Text" Type="button" OnClick="RecoverPassword">
-                    Esqueci minha senha
-                </Button>
+            <div class="hidden md:flex md:w-1/2 bg-bg-base flex-col justify-center items-center p-12 text-center">
+                <div class="w-24 h-24 bg-bg-panel rounded-3xl shadow-sm flex items-center justify-center mb-8">
+                    <svg class="w-12 h-12 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 17.5c-4.274 0-7.75-3.476-7.75-7.75S7.726 4.25 12 4.25s7.75 3.476 7.75 7.75-3.476 7.75-7.75 7.75zm-1-12.5h2v6h-2zm0 8h2v2h-2z" />
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-text-main mb-4">VitaFlow</h1>
+                <p class="text-text-muted italic font-medium">"Respire fundo, estamos aqui por você."</p>
             </div>
 
-            <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full">
-                Entrar
-            </Button>
+            <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-bg-panel">
+                
+                <h2 class="text-2xl font-bold text-text-main mb-2">Bem-vindo de volta</h2>
+                <p class="text-text-muted text-sm mb-8">Por favor, insira seus dados para acessar sua conta.</p>
 
-            <div class="relative flex items-center py-4">
-                <div class="flex-grow border-t border-gray-200"></div>
-                <span class="flex-shrink-0 mx-4 text-gray-400 text-xs">Não tem uma conta?</span>
-                <div class="flex-grow border-t border-gray-200"></div>
+                <form @onsubmit="MakeLogin" class="space-y-5">
+                    
+                    <Input 
+                        Label="E-mail" 
+                        Type="email"
+                        Placeholder="seu@email.com" 
+                        @bind-Value="_loginModel.Email" />
+
+                    <Input 
+                        Label="Senha" 
+                        IsPassword="true"
+                        Placeholder="••••••••" 
+                        @bind-Value="_loginModel.Password" />
+
+                    <div class="flex justify-end mt-2 mb-8">
+                        <Button Variant="EButtonVariant.Text" Type="button" OnClick="RecoverPassword">
+                            Esqueci minha senha
+                        </Button>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(_errorMessage))
+                    {
+                        <p class="text-red-500 text-sm font-semibold mb-4 text-center">@_errorMessage</p>
+                    }
+
+                    <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full h-14" Disabled="@_isLoading">
+                        @if (_isLoading)
+                        {
+                            <span class="material-symbols-outlined animate-spin mr-2">progress_activity</span>
+                            <span>Acessando...</span>
+                        }
+                        else
+                        {
+                            <span>Entrar</span>
+                        }
+                    </Button>
+
+                    <div class="relative flex items-center py-4">
+                        <div class="flex-grow border-t border-border-color"></div>
+                        <span class="flex-shrink-0 mx-4 text-text-muted text-xs">Não tem uma conta?</span>
+                        <div class="flex-grow border-t border-border-color"></div>
+                    </div>
+
+                    <Button Variant="EButtonVariant.Secondary" Type="button" CssClass="w-full h-14" OnClick="GoToRegister" Disabled="@_isLoading">
+                        Criar nova conta
+                    </Button>
+                </form>
+
             </div>
-
-            <Button Variant="EButtonVariant.Secondary" Type="button" CssClass="w-full" OnClick="GoToRegister">
-                Criar nova conta
-            </Button>
-        </form>
-
     </div>
-</div>
+</main>
 
 @code {
     [Inject] 
     public NavigationManager NavManager { get; set; } = default!;
     
-    private  readonly LoginViewModel _loginModel = new();
+    private readonly LoginViewModel _loginModel = new();
+    private bool _isLoading = false;
+    private string _errorMessage = string.Empty;
 
-    private void MakeLogin()
+    private async Task MakeLogin()
     {
-        Console.WriteLine($"Tentando logar com: {_loginModel.Email}");
+        _errorMessage = string.Empty;
+        _isLoading = true;
         
+        await Task.Delay(1200);
+        
+        if (_loginModel.Email == "carlos@gmail.com" && _loginModel.Password == "123")
+        {
+            NavManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            _errorMessage = "E-mail ou senha inválidos.";
+            _isLoading = false;
+        }
     }
 
     private void GoToRegister()
@@ -82,6 +112,4 @@
     {
         NavManager.NavigateTo("/recuperar-senha");
     }
-    
-    
 }

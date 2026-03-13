@@ -1,0 +1,56 @@
+@page "/diario"
+@using projeto_carlos.Models
+@using projeto_carlos.Services
+@using projeto_carlos.Components.UI
+@inject IJournalService JournalService
+@inject NavigationManager NavManager
+
+<div class="max-w-4xl mx-auto py-10 px-6 animate-fade-in">
+    @* -- Header -- *@
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">
+                Meu Diário
+            </h1>
+            <p class="text-slate-500 font-medium">
+                Seus registros emocionais e atividades.
+            </p>
+        </div>
+        
+        @if (Entries.Any())
+        {
+            <Button Variant="projeto_carlos.Enums.EButtonVariant.Primary" OnClick="GoToNew">
+                <span class="material-symbols-outlined mr-2">add</span>
+                Novo Registro
+            </Button>
+        }
+    </div>
+    
+    @if (!Entries.Any())
+    {
+        <JournalEmptyState OnNewEntry="GoToNew" />
+    }
+    else
+    {
+        <div class="space-y-4">
+            @foreach (var entry in Entries)
+            {
+                <JournalEntryCard Entry="entry" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private IReadOnlyList<JournalEntry> Entries = Array.Empty<JournalEntry>();
+
+    protected override void OnInitialized()
+    {
+        Entries = JournalService.GetEntries();
+    }
+
+    private void GoToNew()
+    {
+        NavManager.NavigateTo("/diario/novo");
+    }
+}

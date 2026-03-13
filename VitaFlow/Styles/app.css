@@ -1,1 +1,52 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-display: "Inter", sans-serif;
+    --color-primary: #308ce8;
+    --color-surface: #f9fafb;
+    --color-panel: #ffffff;
+}
+
+@layer base {
+    body {
+        @apply bg-surface text-slate-800 antialiased transition-colors duration-300;
+    }
+
+    .dark body {
+        @apply bg-[#111921] text-white;
+    }
+}
+
+@layer components {
+
+    .components-reconnect-first-attempt-visible,
+    .components-reconnect-repeated-attempt-visible,
+    .components-reconnect-failed-visible,
+    .components-pause-visible,
+    .components-resume-failed-visible,
+    .components-rejoining-animation {
+        @apply hidden;
+    }
+
+    [class*="components-reconnect-"] {
+        @apply block;
+    }
+
+    #components-reconnect-modal {
+        @apply fixed top-10 left-1/2 -translate-x-1/2 w-80 p-6 rounded-xl bg-white shadow-2xl opacity-0 invisible transition-all duration-500 z-50;
+    }
+
+    #components-reconnect-modal.components-reconnect-show {
+        @apply opacity-100 visible;
+    }
+
+    #components-reconnect-modal::backdrop {
+        @apply bg-black/40 backdrop-blur-sm;
+    }
+
+    #components-reconnect-modal button {
+        @apply mt-4 w-full py-2 rounded-lg bg-primary text-white font-semibold hover:opacity-90;
+    }
+}

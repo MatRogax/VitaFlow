@@ -15,11 +15,11 @@ public static class ButtonVariantExtensions
     {
         return variant switch
         {
-            EButtonVariant.Primary => "bg-blue-500 hover:bg-blue-600 text-white shadow-sm",
-            EButtonVariant.Secondary => "bg-blue-50 hover:bg-blue-100 text-blue-600",
-            EButtonVariant.Outline => "border border-gray-300 bg-transparent hover:bg-gray-50 text-gray-700",
-            EButtonVariant.Text => "bg-transparent hover:underline text-blue-500 p-0",
-            EButtonVariant.Ghost => "bg-transparent text-gray-500 hover:text-gray-800 p-0",
+            EButtonVariant.Primary => "bg-primary hover:bg-primary/90 text-white shadow-sm",
+            EButtonVariant.Secondary => "bg-bg-input hover:bg-border-color text-primary dark:text-white",
+            EButtonVariant.Outline => "border border-border-color bg-transparent hover:bg-bg-input text-text-main",
+            EButtonVariant.Text => "bg-transparent hover:underline text-primary p-0",
+            EButtonVariant.Ghost => "bg-transparent text-text-muted hover:text-text-main p-0",
             _ => string.Empty
         };
     }

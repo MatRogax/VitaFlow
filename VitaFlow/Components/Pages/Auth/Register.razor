@@ -8,90 +8,118 @@
 
 @inject NavigationManager NavManager
 
-<div class="flex flex-col w-full max-w-4xl mx-auto shadow-xl rounded-3xl overflow-hidden min-h-[650px]">
-    
-    <div class="flex justify-between items-center bg-white p-6 border-b border-gray-100">
-        <div class="flex items-center space-x-2 font-bold text-slate-800 text-xl">
-            <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 17.5c-4.274 0-7.75-3.476-7.75-7.75S7.726 4.25 12 4.25s7.75 3.476 7.75 7.75-3.476 7.75-7.75 7.75zm-1-12.5h2v6h-2zm0 8h2v2h-2z" />
-            </svg>
-            <span>VitaFlow</span>
-        </div>
-        <div class="flex items-center space-x-4 text-sm font-medium">
-            <span class="text-gray-400 hidden sm:block">Já tem uma conta?</span>
-            <Button Variant="EButtonVariant.Outline" OnClick="IrParaLogin" CssClass="!py-2">
-                Entrar
-            </Button>
-        </div>
-    </div>
-
-    <div class="bg-white p-8 md:p-12 flex-grow flex items-center justify-center">
-        <div class="w-full max-w-md">
-            
-            <h2 class="text-3xl font-bold text-slate-900 mb-2">Criar Conta</h2>
-            <p class="text-slate-500 text-sm mb-8 font-medium">Junte-se à nossa comunidade de cuidado e apoio emocional.</p>
-
-            <form @onsubmit="FinalizarCadastro" class="space-y-5">
-                
-                <SegmentedToggle 
-                    Label="Eu sou:" 
-                    @bind-Value="_registerViewModel.Perfil" />
-
-                <Input 
-                    Label="Nome Completo" 
-                    Placeholder="Como quer ser chamado?" 
-                    @bind-Value="_registerViewModel.Nome" />
-
-                <Input 
-                    Label="E-mail" 
-                    Type="email"
-                    Placeholder="exemplo@email.com" 
-                    @bind-Value="_registerViewModel.Email" />
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Input
-                        Label="Senha" 
-                        IsPassword="true"
-                        Placeholder="••••••••" 
-                        @bind-Value="_registerViewModel.Senha" />
-
-                    <Input 
-                        Label="Confirmar Senha" 
-                        IsPassword="true"
-                        Placeholder="••••••••" 
-                        @bind-Value="_registerViewModel.ConfirmarSenha" />
+<div class="relative flex min-h-[600px] w-full flex-col overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+        <AuthHeader>
+            <RightContent>
+                <div class="flex items-center gap-4">
+                    <span class="hidden sm:inline text-sm text-text-muted">Já tem uma conta?</span>
+                    <Button Variant="EButtonVariant.Outline" OnClick="GoToLogin" CssClass="min-w-[100px] !h-10 text-sm font-bold">
+                        Entrar
+                    </Button>
                 </div>
+            </RightContent>
+        </AuthHeader>
 
-                <div class="flex items-start mt-2 mb-6">
-                    <div class="flex items-center h-5">
-                        <input id="termos" type="checkbox" @bind="_registerViewModel.AceitouTermos" class="w-4 h-4 border-gray-300 rounded text-blue-600 focus:ring-blue-500">
+        <main class="flex-1 flex items-center justify-center p-4 md:p-8 mt-24">
+            <div class="w-full max-w-[520px] bg-bg-panel shadow-xl shadow-primary/5 rounded-xl border border-border-color p-8 md:p-12">
+                
+                <div class="flex flex-col gap-2 mb-8 text-center sm:text-left">
+                    <h1 class="text-3xl font-black tracking-tight text-text-main">Criar Conta</h1>
+                    <p class="text-text-muted text-base">Junte-se à nossa comunidade de cuidado e apoio emocional.</p>
+                </div>
+                
+                <form @onsubmit="CompleteRegistration" class="flex flex-col gap-6">
+                    
+                    <SegmentedToggle 
+                        Label="Eu sou:" 
+                        @bind-Value="_registerViewModel.Perfil" />
+
+                    <div class="grid grid-cols-1 gap-5">
+                        <Input 
+                            Label="Nome Completo" 
+                            Placeholder="Como quer ser chamado?" 
+                            @bind-Value="_registerViewModel.Nome">
+                            <LeftIcon>
+                                <span class="material-symbols-outlined text-xl">person</span>
+                            </LeftIcon>
+                        </Input>
+
+                        <Input 
+                            Label="E-mail" 
+                            Type="email"
+                            Placeholder="exemplo@email.com" 
+                            @bind-Value="_registerViewModel.Email">
+                            <LeftIcon>
+                                <span class="material-symbols-outlined text-xl">mail</span>
+                            </LeftIcon>
+                        </Input>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <Input
+                                Label="Senha" 
+                                IsPassword="true"
+                                Placeholder="••••••••" 
+                                @bind-Value="_registerViewModel.Senha">
+                                <LeftIcon>
+                                    <span class="material-symbols-outlined text-xl">lock</span>
+                                </LeftIcon>
+                            </Input>
+
+                            <Input 
+                                Label="Confirmar Senha" 
+                                IsPassword="true"
+                                Placeholder="••••••••" 
+                                @bind-Value="_registerViewModel.ConfirmarSenha">
+                                <LeftIcon>
+                                    <span class="material-symbols-outlined text-xl">lock_reset</span>
+                                </LeftIcon>
+                            </Input>
+                        </div>
                     </div>
-                    <label for="termos" class="ml-2 text-xs font-medium text-gray-500">
-                        Ao clicar em Cadastrar, você concorda com nossos <a href="#" class="text-blue-500 hover:underline">Termos de Uso</a> e <a href="#" class="text-blue-500 hover:underline">Política de Privacidade</a>.
-                    </label>
-                </div>
 
-                <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full shadow-md">
-                    Cadastrar &rarr;
-                </Button>
-                
-                <div class="text-center mt-8 text-xs text-gray-500 font-medium">
-                    Precisando de ajuda urgente? <span class="text-red-500 font-bold hover:underline cursor-pointer">Ligue CVV 188</span>
+                    <div class="flex items-start gap-3 mt-2">
+                        <input id="termos" type="checkbox" @bind="_registerViewModel.AceitouTermos" class="mt-1 rounded border-border-color bg-bg-input text-primary focus:ring-primary h-4 w-4">
+                        <label for="termos" class="text-xs text-text-muted leading-relaxed">
+                            Ao clicar em Cadastrar, você concorda com nossos <a href="#" class="text-primary font-medium hover:underline">Termos de Uso</a> e <a href="#" class="text-primary font-medium hover:underline">Política de Privacidade</a>.
+                        </label>
+                    </div>
+
+                    <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full h-14 flex items-center justify-center gap-2 group shadow-lg shadow-primary/20">
+                        <span>Cadastrar</span>
+                        <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </Button>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-border-color text-center">
+                    <p class="text-sm text-text-muted">
+                        Precisando de ajuda urgente? 
+                        <a href="#" class="text-red-500 font-bold hover:underline ml-1">Ligue CVV 188</a>
+                    </p>
                 </div>
-            </form>
-        </div>
+            </div>
+        </main>
+
+        <footer class="py-10 px-6 md:px-20 flex flex-col items-center gap-4 text-text-muted">
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-primary transition-colors"><span class="material-symbols-outlined">social_leaderboard</span></a>
+                <a href="#" class="hover:text-primary transition-colors"><span class="material-symbols-outlined">alternate_email</span></a>
+                <a href="#" class="hover:text-primary transition-colors"><span class="material-symbols-outlined">share</span></a>
+            </div>
+            <p class="text-xs">© 2024 VitaFlow. Todos os direitos reservados.</p>
+        </footer>
     </div>
 </div>
 
 @code {
     private readonly RegisterViewModel _registerViewModel = new();
 
-    private void IrParaLogin()
+    private void GoToLogin()
     {
         NavManager.NavigateTo("/login"); 
     }
 
-    private void FinalizarCadastro()
+    private void CompleteRegistration()
     {
         if (!_registerViewModel.AceitouTermos)
         {

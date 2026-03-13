@@ -1,0 +1,30 @@
+@using projeto_carlos.Models
+@namespace projeto_carlos.Components.UI
+
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transition-all hover:shadow-md">
+    <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+            <span class="text-lg font-bold text-slate-800">Emoção: @Entry.Emotion</span>
+        </div>
+        <span class="text-sm text-slate-400 font-medium">@Entry.Date.ToString("dd/MM/yyyy HH:mm")</span>
+    </div>
+    
+    @if (!string.IsNullOrWhiteSpace(Entry.Text))
+    {
+        <p class="text-slate-600 mb-4 whitespace-pre-wrap">@Entry.Text</p>
+    }
+    
+    @if (Entry.Activities.Any())
+    {
+        <div class="flex flex-wrap gap-2">
+            @foreach (var act in Entry.Activities)
+            {
+                <span class="px-3 py-1 bg-slate-50 border border-slate-100 text-slate-600 rounded-full text-xs font-semibold">@act</span>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public JournalEntry Entry { get; set; } = new();
+}

@@ -5,68 +5,73 @@
 @layout AuthLayout
 @inject NavigationManager NavManager
 
-<div class="max-w-5xl mx-auto w-full">
-    
-    <AuthHeader>
-        <RightContent>
-            <Button Variant="EButtonVariant.Text" OnClick="OpenHelp">
-                Precisa de ajuda?
-            </Button>
-        </RightContent>
-    </AuthHeader>
+<div class="relative flex min-h-[600px] w-full flex-col overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col items-center justify-center p-4">
+        <div class="w-full">
+            <AuthHeader>
+                <RightContent>
+                    <Button Variant="EButtonVariant.Text" OnClick="OpenHelp" CssClass="text-primary hover:text-primary/80 font-semibold">
+                        Precisa de ajuda?
+                    </Button>
+                </RightContent>
+            </AuthHeader>
 
-    <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[550px]">
-        
-        <div class="w-full md:w-1/2 bg-gradient-to-br from-blue-50 to-blue-100 p-10 md:p-14 flex flex-col justify-between">
-            <div>
-                <IconCircle>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.436 3 11.996c0 2.29.982 4.364 2.578 5.864l-1.42 2.652c-.173.323.116.69.467.595l3.228-.871A9.038 9.038 0 0012 20.25z" />
-                    </svg>
-                </IconCircle>
+            <div class="bg-white w-full max-w-5xl mx-auto rounded-[2rem] shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+                <div class="w-full md:w-1/2 relative bg-slate-50 flex flex-col justify-center p-10 md:p-14 overflow-hidden">
+                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+                    <div class="relative z-10">
+                        <div class="bg-white/90 backdrop-blur inline-flex p-3 rounded-2xl shadow-sm mb-8">
+                            <span class="material-symbols-outlined text-primary text-4xl">air</span>
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-slate-800 leading-tight mb-4">
+                            Respire fundo, vamos te ajudar a recuperar seu acesso.
+                        </h1>
+                        <p class="text-slate-500 text-lg max-w-md">
+                            Mantenha a calma. Em poucos passos você estará de volta à sua jornada de bem-estar.
+                        </p>
+                    </div>
+                    <div class="mt-12 relative z-10 w-full aspect-video rounded-2xl overflow-hidden shadow-lg border-4 border-white bg-slate-50">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" 
+                             class="w-full h-full object-cover" alt="Paisagem relaxante" />
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
+                    <div class="max-w-md mx-auto w-full">
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold text-slate-800 mb-2">Recuperar Senha</h2>
+                            <p class="text-slate-500">
+                                Insira seu e-mail cadastrado e enviaremos um link para você criar uma nova senha.
+                            </p>
+                        </div>
+                        <form @onsubmit="SendLink" class="space-y-6">
+                            <Input Label="E-mail" 
+                                   Placeholder="seu@email.com" 
+                                   @bind-Value="recoveryEmail">
+                                <LeftIcon>
+                                    <span class="material-symbols-outlined text-xl">mail</span>
+                                </LeftIcon>
+                            </Input>
+                            
+                            <div class="pt-2">
+                                <Button Variant="EButtonVariant.Primary" Type="submit" 
+                                        CssClass="w-full py-4 shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
+                                    <span>Enviar Link de Recuperação</span>
+                                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                                </Button>
+                            </div>
 
-                <h1 class="text-3xl md:text-4xl font-bold text-slate-800 leading-tight mb-4">
-                    Respire fundo, vamos te ajudar a recuperar seu acesso.
-                </h1>
-                <p class="text-slate-500 font-medium">
-                    Mantenha a calma. Em poucos passos você estará de volta à sua jornada de bem-estar.
-                </p>
+                            <div class="text-center pt-4">
+                                <Button Variant="EButtonVariant.Ghost" Type="button" OnClick="ToBack" 
+                                        CssClass="w-full group text-slate-500 hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-base group-hover:-translate-x-1 transition-transform mr-2">arrow_back</span>
+                                    Voltar para o Login
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="mt-8 h-48 w-full bg-slate-300 rounded-2xl overflow-hidden shadow-inner"></div>
-        </div>
-
-        <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
-            
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">Recuperar Senha</h2>
-            <p class="text-slate-500 text-sm mb-8">
-                Insira seu e-mail cadastrado e enviaremos um link para você criar uma nova senha.
-            </p>
-
-            <form @onsubmit="SendLink">
-                
-                <Input 
-                    Label="E-mail" 
-                    Type="email"
-                    Placeholder="seu@email.com" 
-                    @bind-Value="recoveryEmail" />
-
-                <div class="mt-6 mb-4">
-                    <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full shadow-md">
-                        Enviar Link de Recuperação &rarr;
-                    </Button>
-                </div>
-
-                <div class="text-center">
-                    <Button Variant="EButtonVariant.Ghost" Type="button" OnClick="ToBack" CssClass="w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                        </svg>
-                        Voltar para o Login
-                    </Button>
-                </div>
-
-            </form>
         </div>
     </div>
 </div>
@@ -74,18 +79,9 @@
 @code {
     private string recoveryEmail = string.Empty;
 
-    private void SendLink()
-    {
-        Console.WriteLine($"Link enviado para: {recoveryEmail}");
-    }
+    private void SendLink() => Console.WriteLine($"Link enviado para: {recoveryEmail}");
 
-    private void ToBack()
-    {
-        NavManager.NavigateTo("/login");
-    }
+    private void ToBack() => NavManager.NavigateTo("/login");
 
-    private void OpenHelp()
-    {
-        Console.WriteLine("Abrindo suporte...");
-    }
+    private void OpenHelp() => Console.WriteLine("Abrindo suporte...");
 }

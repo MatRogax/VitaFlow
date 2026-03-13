@@ -1,0 +1,41 @@
+@namespace projeto_carlos.Components.UI
+
+<button 
+    type="button"
+    class="@GetClasses()"
+    @onclick="HandleClick">
+    
+    <div class="mb-3 text-[32px] @(IsActive ? "text-blue-500" : "text-slate-400") transition-colors">
+        @Icon
+    </div>
+    
+    <span class="text-xs font-semibold @(IsActive ? "text-blue-600" : "text-slate-600") transition-colors">
+        @Label
+    </span>
+</button>
+
+@code {
+    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public bool IsActive { get; set; }
+    [Parameter] public EventCallback OnSelect { get; set; }
+
+    private string GetClasses()
+    {
+        var baseClasses = "flex flex-col items-center justify-center p-4 w-[110px] h-[120px] rounded-2xl bg-white transition-all cursor-pointer focus:outline-none select-none border";
+        
+        var activeClasses = IsActive 
+            ? "border-blue-400 bg-blue-50/50 shadow-sm" 
+            : "border-slate-300 shadow-sm hover:border-slate-400";
+
+        return $"{baseClasses} {activeClasses}";
+    }
+
+    private async Task HandleClick()
+    {
+        if (OnSelect.HasDelegate)
+        {
+            await OnSelect.InvokeAsync();
+        }
+    }
+}

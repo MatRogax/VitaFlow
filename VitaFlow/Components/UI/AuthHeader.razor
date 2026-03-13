@@ -1,0 +1,22 @@
+@namespace projeto_carlos.Components.UI
+
+<header class="flex items-center justify-between border-b border-border-color bg-bg-panel/50 backdrop-blur-sm px-6 md:px-20 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+        <div class="text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-4xl">psychology</span>
+        </div>
+        <h2 class="text-xl font-bold tracking-tight text-text-main">VitaFlow</h2>
+    </div>
+
+    @if (RightContent != null)
+    {
+        <div class="flex items-center gap-4">
+            @RightContent
+        </div>
+    }
+</header>
+
+@code {
+    [Parameter] 
+    public RenderFragment? RightContent { get; set; }
+}

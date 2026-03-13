@@ -1,0 +1,49 @@
+@namespace projeto_carlos.Components.UI
+
+<div class="mb-4">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="block text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
+            @if (Icon != null)
+            {
+                <span class="text-blue-500 flex items-center">@Icon</span>
+            }
+            @Label
+        </label>
+    }
+
+    <div class="relative">
+        <textarea
+            class="@GetClasses()"
+            placeholder="@Placeholder"
+            rows="@Rows"
+            value="@Value"
+            @oninput="OnInputChanged"
+            disabled="@Disabled"></textarea>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string Placeholder { get; set; } = string.Empty;
+    [Parameter] public int Rows { get; set; } = 4;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public string Value { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    private string GetClasses()
+    {
+        var baseClasses = "block w-full rounded-2xl border border-slate-200 py-3.5 px-4 text-slate-800 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 sm:text-sm transition-all bg-white resize-y outline-none";
+        var disabledClasses = Disabled ? "bg-slate-50 text-slate-500 cursor-not-allowed opacity-70" : "";
+
+        return $"{baseClasses} {disabledClasses}".Trim();
+    }
+    
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        var newValue = e.Value?.ToString() ?? string.Empty;
+        Value = newValue; 
+        await ValueChanged.InvokeAsync(newValue); 
+    }
+}

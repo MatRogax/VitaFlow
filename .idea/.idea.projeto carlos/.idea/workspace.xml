@@ -8,30 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31702527-9bea-4843-a3c1-bdeef17a6610" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.projeto carlos/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/ForgetPass.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/UI/Header.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/UI/IconCircle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/VitaFlow/Components/UI/IconCircle.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.projeto carlos/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.projeto carlos/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/Components/Pages/Auth/Login.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/Models/Enums/EButtonVariant.cs" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/Models/Enums/EButtonVariant.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/VitaFlow.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/VitaFlow.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/bin/Debug/net10.0/VitaFlow.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/VitaFlow.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/ref/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/ref/VitaFlow.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/refint/VitaFlow.dll" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/refint/VitaFlow.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/VitaFlow/obj/Debug/net10.0/rpswa.dswa.cache.json" afterDir="false" />
-    </list>
+    <list default="true" id="31702527-9bea-4843-a3c1-bdeef17a6610" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,7 +118,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773188270302</updated>
-      <workItem from="1773188270519" duration="11313000" />
+      <workItem from="1773188270519" duration="11521000" />
     </task>
     <servers />
   </component>

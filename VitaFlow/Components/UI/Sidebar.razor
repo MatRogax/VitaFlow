@@ -1,0 +1,78 @@
+@using projeto_carlos.Enums
+@inject NavigationManager NavManager
+
+<aside class="w-64 h-screen max-h-screen bg-white border-r border-slate-200 flex flex-col flex-shrink-0 sticky top-0 overflow-y-auto">
+    <div class="p-6">
+        <div class="flex items-center space-x-3">
+            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white">
+                <span class="material-symbols-outlined text-[18px]">spa</span>
+            </div>
+            <h2 class="text-[1.15rem] font-bold tracking-tight text-slate-800">VitaFlow</h2>
+        </div>
+    </div>
+
+    <nav class="flex-1 px-4 py-4 space-y-2">
+        <a href="/" class="@GetMenuClass("/")">
+            <span class="material-symbols-outlined text-xl">grid_view</span>
+            <span>Painel</span>
+        </a>
+
+        <a href="/consultas" class="@GetMenuClass("/consultas")">
+            <span class="material-symbols-outlined text-xl">calendar_month</span>
+            <span>Consultas</span>
+        </a>
+
+        <a href="/meditacoes" class="@GetMenuClass("/meditacoes")">
+            <span class="material-symbols-outlined text-xl">self_improvement</span>
+            <span>Meditações</span>
+        </a>
+
+        <a href="/diario" class="@GetMenuClass("/diario")">
+            <span class="material-symbols-outlined text-xl">menu_book</span>
+            <span>Diário</span>
+        </a>
+    </nav>
+
+    <div class="p-4 border-t border-slate-200">
+        <div class="flex items-center justify-between group pt-2 pb-2">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-slate-200 border border-slate-200 flex items-center justify-center text-slate-500">
+                    <span class="material-symbols-outlined text-[24px]">person</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold text-slate-800">carlos</span>
+                    <span class="text-xs text-slate-500">Premium</span>
+                </div>
+            </div>
+            <button class="text-slate-400 hover:text-primary transition-colors flex items-center justify-center outline-none">
+                <span class="material-symbols-outlined text-[20px]">settings</span>
+            </button>
+        </div>
+    </div>
+</aside>
+
+@code {
+    private string CurrentUrl => NavManager.ToBaseRelativePath(NavManager.Uri);
+
+    protected override void OnInitialized()
+    {
+        NavManager.LocationChanged += (s, e) => StateHasChanged();
+    }
+
+    private string GetMenuClass(string href)
+    {
+        var hrefRelative = href.TrimStart('/');
+        var isActive = hrefRelative == string.Empty ? CurrentUrl == string.Empty : CurrentUrl.StartsWith(hrefRelative, StringComparison.OrdinalIgnoreCase);
+
+        var baseClasses = "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors";
+        
+        if (isActive)
+        {
+            return $"{baseClasses} bg-primary/10 text-primary font-bold";
+        }
+        else
+        {
+             return $"{baseClasses} text-slate-500 hover:bg-slate-50 hover:text-slate-800 font-medium";
+        }
+    }
+}

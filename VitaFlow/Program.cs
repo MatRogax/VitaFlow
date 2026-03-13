@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<projeto_carlos.Services.IJournalService, projeto_carlos.Services.JournalService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
