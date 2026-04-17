@@ -1,0 +1,41 @@
+@using projeto_carlos.Components.UI
+@namespace projeto_carlos.Components.UI.SettingsSections
+
+<section class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 h-full">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-2xl">notifications_active</span>
+        </div>
+        <h3 class="text-xl font-black text-slate-800 tracking-tight">Preferências</h3>
+    </div>
+    
+    <div class="space-y-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-bold text-slate-800">Lembretes de Meditação</p>
+                <p class="text-sm text-slate-400 font-medium">Notificar horários programados</p>
+            </div>
+            <Toggle @bind-IsChecked="_meditationReminders" />
+        </div>
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-bold text-slate-800">Alertas de Consulta</p>
+                <p class="text-sm text-slate-400 font-medium">Avisos de sessões em breve</p>
+            </div>
+            <Toggle @bind-IsChecked="_sessionAlerts" />
+        </div>
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-bold text-slate-800">Resumo Semanal</p>
+                <p class="text-sm text-slate-400 font-medium">Relatório de progresso</p>
+            </div>
+            <Toggle @bind-IsChecked="_weeklySummary" />
+        </div>
+    </div>
+</section>
+
+@code {
+    private bool _meditationReminders = true;
+    private bool _sessionAlerts = true;
+    private bool _weeklySummary = false;
+}

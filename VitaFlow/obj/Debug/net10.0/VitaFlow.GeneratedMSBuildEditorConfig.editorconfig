@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvUmVjb25uZWN0TW9kYWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/AgendarSessao.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BZ2VuZGFyU2Vzc2FvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Auth/ForgetPass.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BdXRoL0ZvcmdldFBhc3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,6 +52,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Auth/Register.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BdXRoL1JlZ2lzdGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Configuracoes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Db25maWd1cmFjb2VzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Consultas.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Db25zdWx0YXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Dashboard.razor]
@@ -62,8 +74,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Kb3VybmFsTGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Meditations.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9NZWRpdGF0aW9ucy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ob3RGb3VuZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Pages/Psychologists.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qc3ljaG9sb2dpc3RzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/Routes.razor]
@@ -74,12 +94,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9BY3Rpdml0eVRhZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/AppointmentCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9BcHBvaW50bWVudENhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/AppointmentItem.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9BcHBvaW50bWVudEl0ZW0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/AuthHeader.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9BdXRoSGVhZGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/Button.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9CdXR0b24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/DiaryFilter.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9EaWFyeUZpbHRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/DoctorCard.razor]
@@ -110,8 +142,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9Kb3VybmFsRW50cnlDYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/MeditationCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9NZWRpdGF0aW9uQ2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/MeditationCategoryChip.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9NZWRpdGF0aW9uQ2F0ZWdvcnlDaGlwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/MeditationFeaturedCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9NZWRpdGF0aW9uRmVhdHVyZWRDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/SegmentedToggle.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9TZWdtZW50ZWRUb2dnbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/SettingsSections/NotificationsSection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9TZXR0aW5nc1NlY3Rpb25zL05vdGlmaWNhdGlvbnNTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/SettingsSections/PrivacySection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9TZXR0aW5nc1NlY3Rpb25zL1ByaXZhY3lTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/SettingsSections/ProfileSection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9TZXR0aW5nc1NlY3Rpb25zL1Byb2ZpbGVTZWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/SettingsSections/SecuritySection.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9TZXR0aW5nc1NlY3Rpb25zL1NlY3VyaXR5U2VjdGlvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/Sidebar.razor]
@@ -120,6 +180,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/TextArea.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9UZXh0QXJlYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/Toggle.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9Ub2dnbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/UI/TopAppBar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9VSS9Ub3BBcHBCYXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/matheusr/RiderProjects/projeto carlos/VitaFlow/Components/_Imports.razor]

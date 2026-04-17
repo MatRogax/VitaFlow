@@ -1,0 +1,13 @@
+@namespace projeto_carlos.Components.UI
+
+<button class="px-7 py-3 rounded-full font-bold text-sm whitespace-nowrap transition-all @(IsActive ? "bg-primary text-white shadow-lg shadow-primary/25 scale-105" : "bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 shadow-sm shadow-slate-200/50")"
+        @onclick="OnSelect">
+    @Label
+</button>
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public bool IsActive { get; set; }
+    [Parameter] public EventCallback OnSelect { get; set; }
+}
+

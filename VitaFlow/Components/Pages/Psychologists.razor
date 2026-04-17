@@ -1,0 +1,105 @@
+@page "/psicologos"
+@using projeto_carlos.Components.UI
+@using projeto_carlos.Models.Entities
+@using projeto_carlos.Enums
+@inject NavigationManager NavManager
+
+<div class="px-6 md:px-20 py-10 w-full max-w-[1920px] mx-auto flex flex-col gap-12">
+
+    <div class="max-w-3xl">
+        <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+            Encontre o apoio ideal <span class="text-primary italic">para você</span>.
+        </h1>
+        <p class="text-lg text-slate-500 font-medium leading-relaxed">
+            Conecte-se com psicólogos voluntários prontos para ajudar na sua jornada de autoconhecimento e bem-estar emocional.
+        </p>
+    </div>
+
+    <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100 flex flex-col lg:flex-row items-center gap-4">
+        <div class="flex-1 w-full relative">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input type="text" 
+                   placeholder="Buscar por nome ou área..." 
+                   class="w-full pl-12 pr-4 py-4 bg-slate-50 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all" />
+        </div>
+        
+        <div class="flex flex-col sm:flex-row w-full lg:w-auto gap-4">
+            <div class="relative w-full sm:w-64">
+                <select class="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm outline-none appearance-none cursor-pointer">
+                    <option>Especialidade</option>
+                    <option>Psicologia Clínica</option>
+                    <option>TCC</option>
+                    <option>Psicanálise</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+            </div>
+            
+            <div class="relative w-full sm:w-64">
+                <select class="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl text-sm outline-none appearance-none cursor-pointer">
+                    <option>Disponibilidade</option>
+                    <option>Manhã</option>
+                    <option>Tarde</option>
+                    <option>Noite</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+            </div>
+
+            <button class="bg-primary text-white p-4 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all flex items-center justify-center">
+                <span class="material-symbols-outlined">filter_list</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @foreach (var psychologist in _psychologists)
+        {
+            <DoctorCard Psychologist="psychologist" OnSchedule="HandleSchedule" />
+        }
+    </div>
+</div>
+
+@code {
+    private List<PsychologistModel> _psychologists = new();
+
+    protected override void OnInitialized()
+    {
+        _psychologists = new List<PsychologistModel>
+        {
+            new PsychologistModel 
+            { 
+                Id = 1, 
+                Name = "Dra. Ana Silva", 
+                Specialty = "Psicologia Clínica • TCC", 
+                Note = 4.8, 
+                TotalEvaluations = 124, 
+                ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAtxw-7JspiCQOKAYHKH0Oj04uEHVFkH9gqaakg3OcDaW6uu2vt1zp9PPado3yBSWmFboc8o6Xf2T9eMH3s2fxS8S8uNdhaQfohfoP4LIzLo0nEpVvrhHySMdXudAZQNvSU9h3v3FdlptaB3YmqB1H26NQprXWaO8CqnceJUhZ0NT-Jjt7dRnaIsOmA7XY6VMTNE4rAIsNDS4P9AhttLXrqYGZ7szgujmbLf9gpxZ4F4XYA9g0mgw48ocC0Nm4qLhGqIazAu9S_yPCY",
+                Tags = new List<string> { "Ansiedade", "Depressão" }
+            },
+            new PsychologistModel 
+            { 
+                Id = 2, 
+                Name = "Dr. Carlos Mendes", 
+                Specialty = "Abordagem Humanista", 
+                Note = 5.0, 
+                TotalEvaluations = 89, 
+                ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuD8iksHpEO2Z0d4ii2EkacLrUX5htPtX0QGJpSHsDfLsAZ3fssLUdOQYarF5_fjOC_lhNNUUiuBoLq97uvxGzw8yopStzKHP_K1tCEN6WQ0TWqDTiWd-SGTyYQPS6UkX37iZabU_ymGmgu7tRo94-yI9HlnJ--AgOFccUg8PJqBESUS6k98DO1b1yXiAhtmTYNy1jjix-SxbIXEXqexVYqOkjw_FQPju1o8vHBavKnQm3iiMNzZ4whjlxtECC0MJXg58aBtBjWXJxPX",
+                Tags = new List<string> { "Conflitos", "Autoestima" }
+            },
+            new PsychologistModel 
+            { 
+                Id = 3, 
+                Name = "Dra. Beatriz Costa", 
+                Specialty = "Psicanálise", 
+                Note = 4.2, 
+                TotalEvaluations = 56, 
+                ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAyx3p-9C0P-89S8g-pUl0vUOD90GJYvmXFokuKanTf4tW_yVKZHNxwEQ0D-ZZT3gpq9ZJVoy1QxcQFa_9sBOyLJc0UO8OxewpKPxCbKWreG90SoUb6I3tUfwQUI2knjR0a94gDbjuZgEqIPp9Gq14BcGATVo8drRngqtKNkKelC6H6vwHPcK7gOlNIafrgB-kWc9RzXihsExgnN_Qlz5uKdPjnjl-UNaz42wN9su4ZWzeXZAeuepexm7sqao4vn7FcW_mObLj0e7TA",
+                Tags = new List<string> { "Traumas", "Relacionamentos" }
+            }
+        };
+    }
+
+    private void HandleSchedule(int psychologistId)
+    {
+        NavManager.NavigateTo($"/agendar-sessao/{psychologistId}");
+    }
+}

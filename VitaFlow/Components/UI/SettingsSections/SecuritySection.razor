@@ -1,0 +1,33 @@
+@using projeto_carlos.Components.UI
+@namespace projeto_carlos.Components.UI.SettingsSections
+
+<section class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
+            <span class="material-symbols-outlined text-2xl">verified_user</span>
+        </div>
+        <h3 class="text-xl font-black text-slate-800 tracking-tight">Segurança da Conta</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <button class="flex items-center justify-between p-6 rounded-2xl bg-slate-50/50 border border-slate-50 hover:bg-slate-50 hover:border-slate-100 transition-all group">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-slate-400">password</span>
+                <span class="font-bold text-slate-800">Alterar Senha</span>
+            </div>
+            <span class="material-symbols-outlined text-slate-300 group-hover:translate-x-1 transition-transform">chevron_right</span>
+        </button>
+        <button class="flex items-center justify-between p-6 rounded-2xl bg-slate-50/50 border border-slate-50 hover:bg-slate-50 hover:border-slate-100 transition-all group">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-slate-400">phonelink_lock</span>
+                <span class="font-bold text-slate-800">2FA (Autenticação)</span>
+            </div>
+            <span class="material-symbols-outlined text-slate-300 group-hover:translate-x-1 transition-transform">chevron_right</span>
+        </button>
+    </div>
+
+    <div class="mt-10 p-5 bg-red-50/50 rounded-2xl flex items-center gap-3 text-red-600 border border-red-50">
+        <span class="material-symbols-outlined text-lg">info</span>
+        <p class="text-[10px] font-black uppercase tracking-widest">Sessão ativa em 2 dispositivos</p>
+    </div>
+</section>

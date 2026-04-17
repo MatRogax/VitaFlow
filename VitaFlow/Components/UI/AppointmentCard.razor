@@ -1,0 +1,92 @@
+@using projeto_carlos.Models.Entities
+@using projeto_carlos.Enums
+
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+    <!-- Decorative Orb -->
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors duration-500"></div>
+    
+    <div class="flex items-start gap-5 relative z-10">
+        @if (!string.IsNullOrEmpty(Session.Psychologist.ImageUrl))
+        {
+            <img src="@Session.Psychologist.ImageUrl" 
+                 alt="@Session.Psychologist.Name" 
+                 class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-sm" />
+        }
+        else
+        {
+            <div class="w-16 h-16 rounded-full @Session.Psychologist.Avatar flex items-center justify-center text-white text-xl font-bold border-2 border-white shadow-sm">
+                @GetInitials(Session.Psychologist.Name)
+            </div>
+        }
+
+        <div class="flex-1">
+            <div class="flex justify-between items-start mb-1">
+                <div>
+                    <h4 class="font-bold text-lg text-slate-800 tracking-tight">@Session.Psychologist.Name</h4>
+                    <p class="text-sm text-primary font-medium">@Session.Psychologist.Specialty</p>
+                </div>
+                
+                @if (!string.IsNullOrEmpty(Session.StatusLabel))
+                {
+                    <span class="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        @Session.StatusLabel
+                    </span>
+                }
+            </div>
+
+            <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-slate-500 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">event</span>
+                    <span>@Session.Date.ToString("MMM dd, yyyy")</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">schedule</span>
+                    <span>@Session.StartTime.ToString(@"hh\:mm") - @Session.EndTime.ToString(@"hh\:mm")</span>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                @if (Session.CanJoin)
+                {
+                    <Button Variant="EButtonVariant.Primary" CssClass="w-full sm:w-auto" OnClick="OnJoinClick">
+                        <span class="material-symbols-outlined text-[18px] mr-2">videocam</span>
+                        Join Session
+                    </Button>
+                }
+                else
+                {
+                    <Button Variant="EButtonVariant.Primary" Disabled="true" CssClass="w-full sm:w-auto opacity-50 cursor-not-allowed">
+                        <span class="material-symbols-outlined text-[18px] mr-2">lock</span>
+                        Join Session
+                    </Button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public SessionModel Session { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<int> OnJoin { get; set; }
+
+    private async Task OnJoinClick()
+    {
+        if (OnJoin.HasDelegate)
+        {
+            await OnJoin.InvokeAsync(Session.Id);
+        }
+    }
+
+    private string GetInitials(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName)) return "";
+        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var realName = parts.Where(p => !p.StartsWith("Dr")).ToArray();
+        if (realName.Length == 0) return "";
+        if (realName.Length == 1) return realName[0].Substring(0, 1).ToUpper();
+        return (realName[0].Substring(0, 1) + realName[1].Substring(0, 1)).ToUpper();
+    }
+}

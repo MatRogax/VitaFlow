@@ -1,12 +1,14 @@
 using projeto_carlos;
 using projeto_carlos.Components;
+using projeto_carlos.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped<projeto_carlos.Services.IJournalService, projeto_carlos.Services.JournalService>();
+builder.Services.AddScoped<IJournalService, JournalService>();
+builder.Services.AddScoped<IMeditationsService, MeditationsService>();
 
 var app = builder.Build();
 

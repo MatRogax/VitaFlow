@@ -1,7 +1,7 @@
 @using projeto_carlos.Enums
 @inject NavigationManager NavManager
 
-<aside class="w-64 h-screen max-h-screen bg-white border-r border-slate-200 flex flex-col flex-shrink-0 sticky top-0 overflow-y-auto">
+<aside class="w-80 h-screen max-h-screen bg-white border-r border-slate-200 flex flex-col flex-shrink-0 sticky top-0 overflow-y-auto">
     <div class="p-6">
         <div class="flex items-center space-x-3">
             <div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white">
@@ -12,7 +12,7 @@
     </div>
 
     <nav class="flex-1 px-4 py-4 space-y-2">
-        <a href="/" class="@GetMenuClass("/")">
+        <a href="/dashboard" class="@GetMenuClass("/dashboard")">
             <span class="material-symbols-outlined text-xl">grid_view</span>
             <span>Painel</span>
         </a>
@@ -31,8 +31,12 @@
             <span class="material-symbols-outlined text-xl">menu_book</span>
             <span>Diário</span>
         </a>
-    </nav>
 
+        <a href="/configuracoes" class="@GetMenuClass("/configuracoes")">
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span>Configurações</span>
+        </a>
+    </nav>
     <div class="p-4 border-t border-slate-200">
         <div class="flex items-center justify-between group pt-2 pb-2">
             <div class="flex items-center gap-3">
@@ -44,10 +48,11 @@
                     <span class="text-xs text-slate-500">Premium</span>
                 </div>
             </div>
-            <button class="text-slate-400 hover:text-primary transition-colors flex items-center justify-center outline-none">
-                <span class="material-symbols-outlined text-[20px]">settings</span>
-            </button>
         </div>
+        <button @onclick="HandleLogout" class="w-full flex items-center gap-3 px-6 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-all font-bold text-sm mt-4">
+            <span class="material-symbols-outlined text-xl">logout</span>
+            <span>Sair</span>
+        </button>
     </div>
 </aside>
 
@@ -64,7 +69,7 @@
         var hrefRelative = href.TrimStart('/');
         var isActive = hrefRelative == string.Empty ? CurrentUrl == string.Empty : CurrentUrl.StartsWith(hrefRelative, StringComparison.OrdinalIgnoreCase);
 
-        var baseClasses = "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors";
+        var baseClasses = "flex items-center gap-4 px-6 py-4 rounded-xl transition-all duration-300";
         
         if (isActive)
         {
@@ -74,5 +79,10 @@
         {
              return $"{baseClasses} text-slate-500 hover:bg-slate-50 hover:text-slate-800 font-medium";
         }
+    }
+
+    private void HandleLogout()
+    {
+        NavManager.NavigateTo("/");
     }
 }

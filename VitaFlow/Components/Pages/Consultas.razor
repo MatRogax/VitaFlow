@@ -1,0 +1,122 @@
+@page "/consultas"
+@using projeto_carlos.Models.Entities
+@using projeto_carlos.Components.UI
+@using projeto_carlos.Enums
+
+@inject NavigationManager NavManager
+
+<div class="px-6 md:px-20 py-10 w-full max-w-[1920px] mx-auto flex flex-col">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+            <h2 class="text-[36px] leading-tight font-extrabold tracking-tight text-slate-900 mb-2 font-headline">Your Sessions</h2>
+            <p class="text-[18px] text-slate-500 font-body">Manage your upcoming check-ins and review past guidance.</p>
+        </div>
+        <Button Variant="EButtonVariant.Outline" 
+                OnClick="@(() => NavManager.NavigateTo("/psicologos"))"
+                CssClass="bg-white text-primary border-slate-200 shadow-sm hover:shadow-md py-3 px-6 whitespace-nowrap group">
+            <span class="material-symbols-outlined text-[20px] mr-2 group-hover:rotate-90 transition-transform">add</span>
+            Schedule New Session
+        </Button>
+    </div>
+    <section class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+            </div>
+            <h3 class="text-[20px] font-bold text-slate-800 tracking-tight">Upcoming Sessions</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            @foreach (var session in UpcomingSessions)
+            {
+                <AppointmentCard Session="session" OnJoin="HandleJoinSession" />
+            }
+        </div>
+    </section>
+    <section>
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
+                <span class="material-symbols-outlined text-[18px]">history</span>
+            </div>
+            <h3 class="text-[20px] font-bold text-slate-800 tracking-tight">Past Sessions</h3>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="divide-y divide-slate-100">
+                @foreach (var session in PastSessions)
+                {
+                    <AppointmentItem Session="session" />
+                }
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-100 text-center">
+                <button class="text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors">
+                    Load More History
+                </button>
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    private List<SessionModel> UpcomingSessions = new();
+    private List<SessionModel> PastSessions = new();
+
+    protected override void OnInitialized()
+    {
+        var drJenkins = new PsychologistModel 
+        { 
+            Id = 1, 
+            Name = "Dr. Sarah Jenkins", 
+            Specialty = "Cognitive Behavioral Therapy", 
+            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAtxw-7JspiCQOKAYHKH0Oj04uEHVFkH9gqaakg3OcDaW6uu2vt1zp9PPado3yBSWmFboc8o6Xf2T9eMH3s2fxS8S8uNdhaQfohfoP4LIzLo0nEpVvrhHySMdXudAZQNvSU9h3v3FdlptaB3YmqB1H26NQprXWaO8CqnceJUhZ0NT-Jjt7dRnaIsOmA7XY6VMTNE4rAIsNDS4P9AhttLXrqYGZ7szgujmbLf9gpxZ4F4XYA9g0mgw48ocC0Nm4qLhGqIazAu9S_yPCY" 
+        };
+        
+        var drWei = new PsychologistModel 
+        { 
+            Id = 2, 
+            Name = "Dr. Marcus Wei", 
+            Specialty = "Mindfulness Coaching", 
+            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuD8iksHpEO2Z0d4ii2EkacLrUX5htPtX0QGJpSHsDfLsAZ3fssLUdOQYarF5_fjOC_lhNNUUiuBoLq97uvxGzw8yopStzKHP_K1tCEN6WQ0TWqDTiWd-SGTyYQPS6UkX37iZabU_ymGmgu7tRo94-yI9HlnJ--AgOFccUg8PJqBESUS6k98DO1b1yXiAhtmTYNy1jjix-SxbIXEXqexVYqOkjw_FQPju1o8vHBavKnQm3iiMNzZ4whjlxtECC0MJXg58aBtBjWXJxPX" 
+        };
+
+        var drChen = new PsychologistModel 
+        { 
+            Id = 3, 
+            Name = "Dr. Emily Chen", 
+            Specialty = "Stress Management", 
+            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAyx3p-9C0P-89S8g-pUl0vUOD90GJYvmXFokuKanTf4tW_yVKZHNxwEQ0D-ZZT3gpq9ZJVoy1QxcQFa_9sBOyLJc0UO8OxewpKPxCbKWreG90SoUb6I3tUfwQUI2knjR0a94gDbjuZgEqIPp9Gq14BcGATVo8drRngqtKNkKelC6H6vwHPcK7gOlNIafrgB-kWc9RzXihsExgnN_Qlz5uKdPjnjl-UNaz42wN9su4ZWzeXZAeuepexm7sqao4vn7FcW_mObLj0e7TA" 
+        };
+
+        UpcomingSessions = new List<SessionModel>
+        {
+            new SessionModel 
+            { 
+                Id = 101, 
+                Psychologist = drJenkins, 
+                Date = DateTime.Now.AddDays(1), 
+                StartTime = new TimeSpan(10, 0, 0), 
+                EndTime = new TimeSpan(10, 45, 0), 
+                StatusLabel = "Tomorrow" 
+            },
+            new SessionModel 
+            { 
+                Id = 102, 
+                Psychologist = drWei, 
+                Date = DateTime.Now.AddDays(3), 
+                StartTime = new TimeSpan(14, 30, 0), 
+                EndTime = new TimeSpan(15, 15, 0), 
+                StatusLabel = "In 3 Days" 
+            }
+        };
+
+        PastSessions = new List<SessionModel>
+        {
+            new SessionModel { Id = 50, Psychologist = drJenkins, Date = DateTime.Now.AddDays(-7), Status = "Completed", IsCompleted = true },
+            new SessionModel { Id = 49, Psychologist = drChen, Date = DateTime.Now.AddDays(-15), Status = "Completed", IsCompleted = true }
+        };
+    }
+
+    private void HandleJoinSession(int sessionId)
+    {
+    }
+}

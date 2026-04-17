@@ -33,4 +33,4 @@
 /home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/ref/VitaFlow.dll
 /home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/VitaFlow.sourcelink.json
 /home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/compressed/t5wzolp8sk-{0}-cntgb06oqd-cntgb06oqd.gz
-/home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/compressed/35pb4hikeg-{0}-awqlxfn3l7-awqlxfn3l7.gz
+/home/matheusr/RiderProjects/projeto carlos/VitaFlow/obj/Debug/net10.0/compressed/35pb4hikeg-{0}-p9uxxvcw1z-p9uxxvcw1z.gz

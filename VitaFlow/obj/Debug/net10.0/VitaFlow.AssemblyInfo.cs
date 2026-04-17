@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VitaFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c515faaba9a3304041d71c8669959d14ce8c258")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67eedcb9060e702223c88ab2efa593438f35c6a0")]
 [assembly: System.Reflection.AssemblyProductAttribute("VitaFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VitaFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

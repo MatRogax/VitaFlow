@@ -1,0 +1,45 @@
+@using projeto_carlos.Components.UI
+@using projeto_carlos.Enums
+@namespace projeto_carlos.Components.UI.SettingsSections
+
+<section class="bg-white rounded-[2rem] p-8 md:p-10 shadow-sm border border-slate-100 relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+    
+    <div class="relative z-10">
+        <h3 class="text-xl font-black tracking-tight text-slate-800 mb-8">Informações do Perfil</h3>
+        
+        <div class="flex flex-col md:flex-row gap-12 items-start">
+            <div class="flex flex-col items-center gap-4">
+                <div class="relative group">
+                    <div class="w-32 h-32 rounded-full overflow-hidden ring-4 ring-slate-50 shadow-2xl">
+                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyfRn0XQlsaVY7L6NM2LUj7EJtSYAAOvrokO9BGLUqqOYW0eWQvLTl_jZ2gYBM5N0MRgp-ah5XUaVq1tL2FwDRya8sJeCeCfpBBdkfi8BRFVUh72Gx9gIvH2KIxDqdyN9peE5uy6XR04W-laJETC1IaMyX9EGvFt4pBNuOEZFlxY5wReFV0YxN3zs8voIFpZDFFWo786X8Nyrxg97mdl7EP8VsctFUZ5rOJkU768f1kws_mt1WTWSEMBOeaDmnLPP-QVplb92qzNTt" alt="Profile" />
+                    </div>
+                    <button class="absolute bottom-1 right-1 bg-primary text-white p-2.5 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all">
+                        <span class="material-symbols-outlined text-sm font-bold">photo_camera</span>
+                    </button>
+                </div>
+                <span class="text-[10px] font-black text-primary uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full cursor-pointer hover:bg-blue-100 transition-colors">Alterar Foto</span>
+            </div>
+            <div class="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Input Label="Nome Completo" Value="@_name" Placeholder="Seu nome" ValueChanged="@(v => _name = v)" />
+                <Input Label="E-mail" Value="@_email" Type="email" Placeholder="seu@email.com" ValueChanged="@(v => _email = v)" />
+                <div class="md:col-span-2 flex flex-col gap-2">
+                    <label class="text-sm font-bold text-slate-700">Bio Curta</label>
+                    <textarea class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-slate-800 font-medium focus:ring-2 focus:ring-primary/20 outline-none resize-none min-h-[120px]" 
+                              placeholder="Conte um pouco sobre você..." @bind="_bio"></textarea>
+                </div>
+                <div class="md:col-span-2 flex justify-end mt-4">
+                    <Button Variant="EButtonVariant.Primary" CssClass="px-10 h-14 rounded-2xl shadow-xl shadow-primary/20">
+                        Salvar Alterações
+                    </Button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private string _name = "Carlos Silva";
+    private string _email = "carlos@gmail.com";
+    private string _bio = "Buscando equilíbrio e paz interior através da meditação diária e autoconhecimento.";
+}

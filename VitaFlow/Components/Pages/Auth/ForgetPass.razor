@@ -5,72 +5,78 @@
 @layout AuthLayout
 @inject NavigationManager NavManager
 
-<div class="relative flex min-h-[600px] w-full flex-col overflow-x-hidden">
-    <div class="layout-container flex h-full grow flex-col items-center justify-center p-4">
-        <div class="w-full">
-            <AuthHeader>
-                <RightContent>
-                    <Button Variant="EButtonVariant.Text" OnClick="OpenHelp" CssClass="text-primary hover:text-primary/80 font-semibold">
-                        Precisa de ajuda?
-                    </Button>
-                </RightContent>
-            </AuthHeader>
+<AuthHeader>
+    <RightContent>
+        <button @onclick="OpenHelp" class="text-primary hover:text-primary/80 font-bold text-sm transition-colors">
+            Precisa de ajuda?
+        </button>
+    </RightContent>
+</AuthHeader>
 
-            <div class="bg-white w-full max-w-5xl mx-auto rounded-[2rem] shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
-                <div class="w-full md:w-1/2 relative bg-slate-50 flex flex-col justify-center p-10 md:p-14 overflow-hidden">
-                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-                    <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-                    <div class="relative z-10">
-                        <div class="bg-white/90 backdrop-blur inline-flex p-3 rounded-2xl shadow-sm mb-8">
-                            <span class="material-symbols-outlined text-primary text-4xl">air</span>
-                        </div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-slate-800 leading-tight mb-4">
-                            Respire fundo, vamos te ajudar a recuperar seu acesso.
-                        </h1>
-                        <p class="text-slate-500 text-lg max-w-md">
-                            Mantenha a calma. Em poucos passos você estará de volta à sua jornada de bem-estar.
-                        </p>
-                    </div>
-                    <div class="mt-12 relative z-10 w-full aspect-video rounded-2xl overflow-hidden shadow-lg border-4 border-white bg-slate-50">
-                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" 
-                             class="w-full h-full object-cover" alt="Paisagem relaxante" />
-                    </div>
+<div class="relative flex-1 flex flex-col items-center justify-center p-4">
+    <div class="bg-white w-full max-w-6xl rounded-[3rem] shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col md:flex-row min-h-[700px]">
+        <div class="w-full md:w-1/2 relative bg-gradient-to-br from-blue-50/50 via-white to-blue-50/30 flex flex-col justify-center p-14 md:p-20 overflow-hidden">
+            <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-blue-100/30 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-sky-100/40 rounded-full blur-[120px]"></div>
+            
+            <div class="relative z-10 flex flex-col gap-10">
+                <div class="bg-white shadow-xl shadow-blue-500/10 inline-flex p-5 rounded-full w-20 h-20 items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-4xl">air</span>
                 </div>
-                <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
-                    <div class="max-w-md mx-auto w-full">
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-2">Recuperar Senha</h2>
-                            <p class="text-slate-500">
-                                Insira seu e-mail cadastrado e enviaremos um link para você criar uma nova senha.
-                            </p>
-                        </div>
-                        <form @onsubmit="SendLink" class="space-y-6">
-                            <Input Label="E-mail" 
-                                   Placeholder="seu@email.com" 
-                                   @bind-Value="recoveryEmail">
-                                <LeftIcon>
-                                    <span class="material-symbols-outlined text-xl">mail</span>
-                                </LeftIcon>
-                            </Input>
-                            
-                            <div class="pt-2">
-                                <Button Variant="EButtonVariant.Primary" Type="submit" 
-                                        CssClass="w-full py-4 shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
-                                    <span>Enviar Link de Recuperação</span>
-                                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
-                                </Button>
-                            </div>
+                
+                <div class="space-y-6">
+                    <h1 class="text-4xl md:text-[2.75rem] font-black text-slate-900 leading-[1.1] tracking-tight">
+                        Respire fundo, vamos te ajudar a recuperar seu acesso.
+                    </h1>
+                    <p class="text-slate-500 text-xl font-medium leading-relaxed max-w-lg">
+                        Mantenha a calma. Em poucos passos você estará de volta à sua jornada de bem-estar.
+                    </p>
+                </div>
 
-                            <div class="text-center pt-4">
-                                <Button Variant="EButtonVariant.Ghost" Type="button" OnClick="ToBack" 
-                                        CssClass="w-full group text-slate-500 hover:text-primary transition-colors">
-                                    <span class="material-symbols-outlined text-base group-hover:-translate-x-1 transition-transform mr-2">arrow_back</span>
-                                    Voltar para o Login
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="relative w-full aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border-[12px] border-white ring-1 ring-slate-100">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" 
+                         class="w-full h-full object-cover" alt="Paisagem relaxante" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
                 </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/2 p-14 md:p-24 flex flex-col justify-center bg-white">
+            <div class="max-w-md mx-auto w-full">
+                <div class="mb-12">
+                    <h2 class="text-[1.75rem] font-black text-slate-900 mb-4">Recuperar Senha</h2>
+                    <p class="text-slate-500 text-base leading-relaxed">
+                        Insira seu e-mail cadastrado e enviaremos um link para você criar uma nova senha.
+                    </p>
+                </div>
+
+                <form @onsubmit="SendLink" class="space-y-8">
+                    <div class="space-y-3">
+                        <label class="text-[13px] font-bold text-slate-800 uppercase tracking-wider ml-1">E-mail</label>
+                        <Input Placeholder="seu@email.com" 
+                               @bind-Value="recoveryEmail">
+                            <LeftIcon>
+                                <span class="material-symbols-outlined text-slate-400">mail</span>
+                            </LeftIcon>
+                        </Input>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <Button Variant="EButtonVariant.Primary" Type="submit" 
+                                CssClass="w-full !py-5 shadow-xl shadow-primary/30 flex items-center justify-center gap-3 !text-base rounded-2xl">
+                            <span>Enviar Link de Recuperação</span>
+                            <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                        </Button>
+                    </div>
+
+                    <div class="flex justify-center pt-4">
+                        <button type="button" @onclick="ToBack" 
+                                class="flex items-center gap-2 text-slate-500 hover:text-primary font-bold text-sm transition-all group">
+                            <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                            Voltar para o Login
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

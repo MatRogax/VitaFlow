@@ -1,0 +1,31 @@
+@using projeto_carlos.Models
+@namespace projeto_carlos.Components.UI
+
+<div class="relative rounded-[2.5rem] bg-white p-6 shadow-xl shadow-slate-200/40 border border-slate-100 hover:shadow-2xl hover:border-primary/20 transition-all group flex flex-col overflow-hidden isolate">
+    <div class="absolute -right-10 -top-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl -z-10 group-hover:bg-primary/10 transition-colors"></div>
+    
+    <div class="aspect-square rounded-[2rem] overflow-hidden mb-6 relative shadow-lg">
+        <img src="@Meditation.ImageUrl" 
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        <div class="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-slate-900/60 backdrop-blur-md text-white text-[11px] font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[14px]">schedule</span> 
+            @Meditation.DurationMinutes min
+        </div>
+    </div>
+    
+    <h4 class="text-xl font-black text-slate-900 tracking-tight mb-2 group-hover:translate-x-1 transition-transform leading-snug">
+        @Meditation.Title
+    </h4>
+    <p class="text-sm text-slate-500 mb-6 flex-1 line-clamp-2 leading-relaxed font-medium">
+        @Meditation.Description
+    </p>
+    
+    <button class="flex items-center justify-between w-full px-6 py-3.5 rounded-2xl bg-slate-50 text-primary font-bold hover:bg-primary/10 transition-all group/btn active:scale-95">
+        <span>Play Session</span>
+        <span class="material-symbols-outlined group-hover/btn:scale-110 transition-transform">play_circle</span>
+    </button>
+</div>
+
+@code {
+    [Parameter] public Meditation Meditation { get; set; } = new();
+}

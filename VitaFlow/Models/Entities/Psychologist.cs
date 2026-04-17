@@ -8,4 +8,6 @@ public class PsychologistModel
     public double Note { get; set; }
     public int TotalEvaluations { get; set; }
     public string Avatar { get; set; } = "bg-teal-500"; 
+    public string? ImageUrl { get; set; }
+    public List<string> Tags { get; set; } = new();
 }

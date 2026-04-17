@@ -1,30 +1,90 @@
 @using projeto_carlos.Models
 @namespace projeto_carlos.Components.UI
 
-<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 transition-all hover:shadow-md">
-    <div class="flex items-center justify-between mb-3">
-        <div class="flex items-center gap-2">
-            <span class="text-lg font-bold text-slate-800">Emoção: @Entry.Emotion</span>
+<article class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow cursor-pointer group">
+    <div class="flex-1 space-y-4">
+        <div class="flex justify-between items-start">
+            <div class="space-y-1">
+                <div class="text-primary font-bold text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">calendar_month</span>
+                    @Entry.Date.ToString("dd 'de' MMMM, yyyy", new System.Globalization.CultureInfo("pt-BR"))
+                </div>
+                <h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-snug">@Entry.Title</h3>
+            </div>
+            
+            <div class="flex items-center gap-2 @GetEmotionClasses() px-3 py-1.5 rounded-full border">
+                <span class="text-lg">@GetEmotionEmoji()</span>
+                <span class="@GetEmotionTextClasses() text-xs font-bold uppercase">@Entry.Emotion</span>
+            </div>
         </div>
-        <span class="text-sm text-slate-400 font-medium">@Entry.Date.ToString("dd/MM/yyyy HH:mm")</span>
+        
+        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">
+            @Entry.Text
+        </p>
+        
+        <div class="flex items-center justify-between pt-2">
+            <div class="flex flex-wrap gap-2">
+                @foreach (var act in Entry.Activities)
+                {
+                    <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight">@act</span>
+                }
+            </div>
+            <span class="text-primary text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
+                Ler registro completo
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </span>
+        </div>
     </div>
     
-    @if (!string.IsNullOrWhiteSpace(Entry.Text))
+    @if (!string.IsNullOrEmpty(Entry.ImageUrl))
     {
-        <p class="text-slate-600 mb-4 whitespace-pre-wrap">@Entry.Text</p>
-    }
-    
-    @if (Entry.Activities.Any())
-    {
-        <div class="flex flex-wrap gap-2">
-            @foreach (var act in Entry.Activities)
-            {
-                <span class="px-3 py-1 bg-slate-50 border border-slate-100 text-slate-600 rounded-full text-xs font-semibold">@act</span>
-            }
+        <div class="w-full md:w-48 h-32 md:h-auto rounded-xl bg-center bg-cover flex-shrink-0 border border-slate-100 dark:border-slate-800" 
+             style="background-image: url('@Entry.ImageUrl');">
         </div>
     }
-</div>
+</article>
 
 @code {
     [Parameter] public JournalEntry Entry { get; set; } = new();
+
+    private string GetEmotionClasses()
+    {
+        return Entry.Emotion switch
+        {
+            "Radiante" => "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-100 dark:border-yellow-900/40",
+            "Calmo" => "bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-900/40",
+            "Cansado" => "bg-orange-50 dark:bg-orange-900/20 border-orange-100 dark:border-orange-900/40",
+            "Amado" => "bg-pink-50 dark:bg-pink-900/20 border-pink-100 dark:border-pink-900/40",
+            _ => "bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700"
+        };
+    }
+
+    private string GetEmotionTextClasses()
+    {
+        return Entry.Emotion switch
+        {
+            "Radiante" => "text-yellow-700 dark:text-yellow-400",
+            "Calmo" => "text-blue-700 dark:text-blue-400",
+            "Cansado" => "text-orange-700 dark:text-orange-400",
+            "Amado" => "text-pink-700 dark:text-pink-400",
+            _ => "text-slate-700 dark:text-slate-400"
+        };
+    }
+
+    private string GetEmotionEmoji()
+    {
+        return Entry.Emotion switch
+        {
+            "Radiante" => "✨",
+            "Calmo" => "🌊",
+            "Cansado" => "☁️",
+            "Amado" => "🥰",
+            "Muito Feliz" => "😊",
+            "Feliz" => "🙂",
+            "Neutro" => "😐",
+            "Triste" => "😔",
+            "Muito Triste" => "😢",
+            _ => "✨"
+        };
+    }
 }

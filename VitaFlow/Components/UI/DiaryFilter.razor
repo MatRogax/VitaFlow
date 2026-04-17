@@ -1,0 +1,49 @@
+@namespace projeto_carlos.Components.UI
+
+<button 
+    type="button"
+    class="@GetClasses()"
+    @onclick="HandleClick">
+    
+    @if (!string.IsNullOrEmpty(Icon))
+    {
+        <span class="material-symbols-outlined text-lg leading-none">@Icon</span>
+    }
+    
+    <span>@Label</span>
+    
+    @if (HasArrow)
+    {
+        <span class="material-symbols-outlined text-lg leading-none">keyboard_arrow_down</span>
+    }
+</button>
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public bool IsActive { get; set; }
+    [Parameter] public bool HasArrow { get; set; } = true;
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private string GetClasses()
+    {
+        var baseClasses = "flex h-10 shrink-0 items-center gap-2 rounded-full px-5 text-sm transition-colors";
+        
+        if (IsActive)
+        {
+            return $"{baseClasses} bg-primary text-white font-semibold";
+        }
+        else
+        {
+            return $"{baseClasses} bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-50 dark:hover:bg-slate-700";
+        }
+    }
+
+    private async Task HandleClick()
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
+}

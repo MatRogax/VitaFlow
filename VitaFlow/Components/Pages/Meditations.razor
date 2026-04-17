@@ -1,0 +1,61 @@
+@page "/meditacoes"
+@using projeto_carlos.Models
+@using projeto_carlos.Services
+@using projeto_carlos.Components.UI
+@inject IMeditationsService MeditationsService
+
+<div class="max-w-[1920px] mx-auto animate-fade-in">
+    <TopAppBar ActiveTab="@ActiveCategory" OnTabChanged="HandleTabChange" />
+    <div class="mb-14 max-w-4xl">
+        <h2 class="text-[3.25rem] font-black tracking-tight text-slate-900 mb-6 leading-[1.1]">
+            Find your <span class="text-primary">center.</span>
+        </h2>
+        <p class="text-xl text-slate-500 max-w-2xl leading-relaxed font-medium">
+            Explore our curated collection of guided audio sessions designed to help you navigate anxiety, improve focus, and achieve deep sleep.
+        </p>
+    </div>
+    <div class="flex items-center gap-4 overflow-x-auto pb-6 mb-10 scrollbar-hide">
+        <MeditationCategoryChip Label="All Sessions" IsActive="@(ActiveSubCategory == "All")" OnSelect="@(() => FilterBySubCategory("All"))" />
+        <MeditationCategoryChip Label="Anxiety Relief" IsActive="@(ActiveSubCategory == "Anxiety Relief")" OnSelect="@(() => FilterBySubCategory("Anxiety Relief"))" />
+        <MeditationCategoryChip Label="Deep Sleep" IsActive="@(ActiveSubCategory == "Deep Sleep")" OnSelect="@(() => FilterBySubCategory("Deep Sleep"))" />
+        <MeditationCategoryChip Label="Focus Flow" IsActive="@(ActiveSubCategory == "Focus Flow")" OnSelect="@(() => FilterBySubCategory("Focus Flow"))" />
+        <MeditationCategoryChip Label="Morning Start" IsActive="@(ActiveSubCategory == "Morning Start")" OnSelect="@(() => FilterBySubCategory("Morning Start"))" />
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        @if (FeaturedMeditation != null && ActiveSubCategory == "All")
+        {
+            <MeditationFeaturedCard Meditation="@FeaturedMeditation" />
+        }
+
+        @foreach (var meditation in FilteredMeditations)
+        {
+            @if (!meditation.IsFeatured || ActiveSubCategory != "All")
+            {
+                <MeditationCard Meditation="@meditation" />
+            }
+        }
+    </div>
+</div>
+
+@code {
+    private string ActiveCategory { get; set; } = "Focus";
+    private string ActiveSubCategory { get; set; } = "All";
+
+    private List<Meditation> AllMeditations => MeditationsService.GetMeditations();
+    private Meditation? FeaturedMeditation => AllMeditations.FirstOrDefault(m => m.IsFeatured && m.Category == ActiveCategory);
+    
+    private IEnumerable<Meditation> FilteredMeditations => AllMeditations
+        .Where(m => m.Category == ActiveCategory)
+        .Where(m => ActiveSubCategory == "All" || m.SubCategory == ActiveSubCategory);
+
+    private void HandleTabChange(string category)
+    {
+        ActiveCategory = category;
+        ActiveSubCategory = "All";
+    }
+
+    private void FilterBySubCategory(string subCategory)
+    {
+        ActiveSubCategory = subCategory;
+    }
+}

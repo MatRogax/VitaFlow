@@ -5,41 +5,55 @@
 @inject IJournalService JournalService
 @inject NavigationManager NavManager
 
-<div class="max-w-4xl mx-auto py-10 px-6 animate-fade-in">
-    @* -- Header -- *@
-    <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
-        <div>
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">
-                Meu Diário
-            </h1>
-            <p class="text-slate-500 font-medium">
-                Seus registros emocionais e atividades.
-            </p>
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50 dark:bg-slate-950/20">
+    <header class="sticky top-0 z-10 bg-slate-50/80 dark:bg-background-dark/80 backdrop-blur-md p-8 pb-4">
+        <div class="max-w-[1920px] mx-auto flex flex-col gap-6">
+            <div class="flex justify-between items-end">
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-slate-900 dark:text-white text-3xl font-black tracking-tight leading-tight">Meu Diário e Evolução</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">Acompanhe sua jornada e sentimentos ao longo do tempo.</p>
+                </div>
+                <button @onclick="GoToNew" class="hidden md:flex bg-primary hover:bg-primary/90 text-white rounded-xl py-3 px-6 items-center justify-center gap-2 font-bold text-sm transition-all shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-sm">add</span>
+                    <span>Novo Registro</span>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                <DiaryFilter Label="Últimos 7 dias" IsActive="true" />
+                <DiaryFilter Label="Este mês" />
+                <DiaryFilter Label="Últimos 3 meses" />
+                <DiaryFilter Label="Personalizado" Icon="calendar_today" HasArrow="false" />
+            </div>
         </div>
-        
-        @if (Entries.Any())
-        {
-            <Button Variant="projeto_carlos.Enums.EButtonVariant.Primary" OnClick="GoToNew">
-                <span class="material-symbols-outlined mr-2">add</span>
-                Novo Registro
-            </Button>
-        }
-    </div>
-    
-    @if (!Entries.Any())
-    {
-        <JournalEmptyState OnNewEntry="GoToNew" />
-    }
-    else
-    {
-        <div class="space-y-4">
-            @foreach (var entry in Entries)
+    </header>
+
+    <section class="flex-1 p-8 pt-4 overflow-y-auto">
+        <div class="max-w-[1920px] mx-auto space-y-6">
+            @if (!Entries.Any())
             {
-                <JournalEntryCard Entry="entry" />
+                <JournalEmptyState OnNewEntry="GoToNew" />
+            }
+            else
+            {
+                @foreach (var entry in Entries)
+                {
+                    <JournalEntryCard Entry="entry" />
+                }
+            }
+
+            @if (Entries.Any())
+            {
+                <div class="flex justify-center py-6">
+                    <button class="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold text-sm hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">expand_more</span>
+                        Carregar registros anteriores
+                    </button>
+                </div>
             }
         </div>
-    }
-</div>
+    </section>
+</main>
 
 @code {
     private IReadOnlyList<JournalEntry> Entries = Array.Empty<JournalEntry>();
@@ -47,6 +61,39 @@
     protected override void OnInitialized()
     {
         Entries = JournalService.GetEntries();
+        
+        if (!Entries.Any())
+        {
+            Entries = new List<JournalEntry>
+            {
+                new JournalEntry 
+                { 
+                    Title = "Um dia de conquistas e paz interior", 
+                    Date = new DateTime(2023, 10, 15), 
+                    Emotion = "Radiante", 
+                    Text = "Hoje comecei o dia com uma meditação de 15 minutos. Senti uma clareza mental incrível durante a reunião de planejamento. Consegui terminar todas as minhas tarefas pendentes e ainda sobrou tempo para uma caminhada no parque ao entardecer...",
+                    Activities = new List<string> { "Produtividade", "Natureza" },
+                    ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBlq8RQqd1vl3nJXIBvKP9Gc3fwi_1oTopVifqbQoK7ZbBIaqKIOU0xqhQiTZ1RvaCtPm_ACy9cfh_L39mlVAh2nWGS8kUOBkjPM3HAqxHymIdRghBcwiSRl-54s19BXuoXVhx59ai9aVUanKwBBSTBeqkAcsEFqFXLiHZOHO4FKrjcUEkYscWZKDT1ZncxI8rhiO-Vt63p9Z3W1D0wPA9S5Ycgy28GLl2KASp6IHIW7K2lJzZfPXq-UTv5YC-OSpmiP2S6WFYMx5_S"
+                },
+                new JournalEntry 
+                { 
+                    Title = "Momentos de calma e introspecção", 
+                    Date = new DateTime(2023, 10, 14), 
+                    Emotion = "Calmo", 
+                    Text = "O dia foi silencioso. Aproveitei a chuva para colocar as leituras em dia. Senti uma leve melancolia no início da tarde, mas o chá de camomila e a música ambiente ajudaram a equilibrar os sentimentos.",
+                    Activities = new List<string> { "Leitura", "Chuva" },
+                    ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDIBeSZnWNY1OeDeFznPU6iUv0jMrnZLTRsVZKleIaeI49EiVivBoNDPWGi9E0RbDeF152XJUXNAkh6eKAlxmpicc73c67tuneZ6yQPG94JmstyryPtBj6qq5ohnwWkS7yDtQwOzYsMGCT6Vbs4uXEOcrz0DzBZr05pqyCSnCuMMCmUq_s-c741YKS0xuawmNtXPzbASKP8uq3TKEM6hBzyL3E9HAXYL1btI1fpy_oUWP7RVmhrfofcR2qqIiNxN-BoKSf5m1OysxUu"
+                },
+                new JournalEntry 
+                { 
+                    Title = "Lidando com o estresse do trabalho", 
+                    Date = new DateTime(2023, 10, 13), 
+                    Emotion = "Cansado", 
+                    Text = " Muitos prazos convergindo hoje. Senti uma ponta de ansiedade antes do almoço. Tentei as técnicas de respiração 4-7-8 que o app sugeriu e realmente ajudaram a baixar o ritmo cardíaco.",
+                    Activities = new List<string> { "Trabalho", "Respiração" }
+                }
+            };
+        }
     }
 
     private void GoToNew()

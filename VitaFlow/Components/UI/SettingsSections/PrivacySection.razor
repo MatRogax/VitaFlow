@@ -1,0 +1,32 @@
+@using projeto_carlos.Components.UI
+@namespace projeto_carlos.Components.UI.SettingsSections
+
+<section class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100">
+    <div class="flex items-center gap-4 mb-10">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+            <span class="material-symbols-outlined text-2xl">key</span>
+        </div>
+        <h3 class="text-xl font-black text-slate-800 tracking-tight">Privacidade & Dados</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-[1.5rem] bg-slate-50/50 border border-slate-50 flex flex-col gap-4">
+            <span class="material-symbols-outlined text-emerald-600 text-3xl">share_off</span>
+            <h4 class="font-black text-slate-800 text-sm">Compartilhamento</h4>
+            <p class="text-xs text-slate-400 font-medium leading-relaxed">Gerencie quem pode ver suas conquistas.</p>
+            <button class="mt-auto text-xs font-black text-primary uppercase tracking-widest hover:underline text-left">Configurar</button>
+        </div>
+        <div class="p-6 rounded-[1.5rem] bg-slate-50/50 border border-slate-50 flex flex-col gap-4">
+            <span class="material-symbols-outlined text-emerald-600 text-3xl">download</span>
+            <h4 class="font-black text-slate-800 text-sm">Meus Dados</h4>
+            <p class="text-xs text-slate-400 font-medium leading-relaxed">Solicite uma cópia completa dos seus dados.</p>
+            <button class="mt-auto text-xs font-black text-primary uppercase tracking-widest hover:underline text-left">Solicitar Expo.</button>
+        </div>
+        <div class="p-6 rounded-[1.5rem] bg-red-50/30 border border-red-50 flex flex-col gap-4">
+            <span class="material-symbols-outlined text-red-500 text-3xl">delete_forever</span>
+            <h4 class="font-black text-slate-800 text-sm">Excluir Conta</h4>
+            <p class="text-xs text-slate-400 font-medium leading-relaxed">Remova permanentemente seu histórico.</p>
+            <button class="mt-auto text-xs font-black text-red-500 uppercase tracking-widest hover:underline text-left">Iniciar Processo</button>
+        </div>
+    </div>
+</section>
