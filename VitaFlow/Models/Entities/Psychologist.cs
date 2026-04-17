@@ -1,8 +1,12 @@
+using projeto_carlos.Common.Entities;
+
 namespace projeto_carlos.Models.Entities;
 
-public class PsychologistModel
+public class Psychologist : BaseEntity
 {
-    public int Id { get; set; }
+    public Guid? UserId { get; set; }
+    public virtual User? User { get; set; }
+    
     public string Name { get; set; } = string.Empty;
     public string Specialty { get; set; } = string.Empty;
     public double Note { get; set; }

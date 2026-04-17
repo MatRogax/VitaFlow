@@ -1,46 +1,39 @@
 @using projeto_carlos.Models.Entities
 
-<div class="p-5 hover:bg-slate-50 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div class="flex items-center gap-4">
-        @if (!string.IsNullOrEmpty(Session.Psychologist.ImageUrl))
-        {
-            <img src="@Session.Psychologist.ImageUrl" 
-                 alt="@Session.Psychologist.Name" 
-                 class="w-12 h-12 rounded-full object-cover grayscale opacity-60" />
-        }
-        else
-        {
-            <div class="w-12 h-12 rounded-full @Session.Psychologist.Avatar flex items-center justify-center text-white text-md font-bold grayscale opacity-60">
-                @GetInitials(Session.Psychologist.Name)
+<div class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all cursor-pointer group">
+    <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+        <span class="material-symbols-outlined text-slate-400">@((Session.Status == "Completed" || Session.IsCompleted) ? "check_circle" : "calendar_today")</span>
+    </div>
+    
+    <div class="flex-1 min-w-0">
+        <div class="flex justify-between items-start">
+            <div>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1">Consulta com @Session.Psychologist.Name</h4>
+                <p class="text-[11px] text-slate-500 font-medium">@Session.Date.ToString("dd MMMM, yyyy") às @Session.StartTime.ToString(@"hh\:mm")</p>
             </div>
-        }
-        <div>
-            <h5 class="font-bold text-slate-800">@Session.Psychologist.Name</h5>
-            <p class="text-sm text-slate-500">@Session.Psychologist.Specialty</p>
+            <span class="text-[10px] font-black uppercase tracking-wider @GetStatusClasses()">
+                @(Session.StatusLabel ?? Session.Status)
+            </span>
         </div>
     </div>
     
-    <div class="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center text-sm text-slate-500 gap-2 sm:gap-1">
-        <span class="font-medium text-slate-700">@Session.Date.ToString("MMM dd, yyyy")</span>
-        <span>@Session.Status</span>
-    </div>
-    
-    <button class="text-primary font-bold text-sm hover:underline flex items-center gap-1 justify-end transition-all">
-        View Notes <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+    <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-300 group-hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
     </button>
 </div>
 
 @code {
     [Parameter, EditorRequired]
-    public SessionModel Session { get; set; } = default!;
+    public Appointment Session { get; set; } = default!;
 
-    private string GetInitials(string fullName)
+    private string GetStatusClasses()
     {
-        if (string.IsNullOrWhiteSpace(fullName)) return "";
-        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var realName = parts.Where(p => !p.StartsWith("Dr")).ToArray();
-        if (realName.Length == 0) return "";
-        if (realName.Length == 1) return realName[0].Substring(0, 1).ToUpper();
-        return (realName[0].Substring(0, 1) + realName[1].Substring(0, 1)).ToUpper();
+        return Session.Status switch
+        {
+            "Completed" => "text-green-500",
+            "Canceled" => "text-red-400",
+            "Upcoming" => "text-primary",
+            _ => "text-slate-400"
+        };
     }
 }

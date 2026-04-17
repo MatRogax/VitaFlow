@@ -1,122 +1,140 @@
 @page "/consultas"
-@using projeto_carlos.Models.Entities
 @using projeto_carlos.Components.UI
+@using projeto_carlos.Models.Entities
+@using projeto_carlos.Services.Interfaces
+@using projeto_carlos.Services
 @using projeto_carlos.Enums
 
+@inject IAppointmentService AppointmentService
+@inject UserSessionService SessionService
 @inject NavigationManager NavManager
 
-<div class="px-6 md:px-20 py-10 w-full max-w-[1920px] mx-auto flex flex-col">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-            <h2 class="text-[36px] leading-tight font-extrabold tracking-tight text-slate-900 mb-2 font-headline">Your Sessions</h2>
-            <p class="text-[18px] text-slate-500 font-body">Manage your upcoming check-ins and review past guidance.</p>
-        </div>
-        <Button Variant="EButtonVariant.Outline" 
-                OnClick="@(() => NavManager.NavigateTo("/psicologos"))"
-                CssClass="bg-white text-primary border-slate-200 shadow-sm hover:shadow-md py-3 px-6 whitespace-nowrap group">
-            <span class="material-symbols-outlined text-[20px] mr-2 group-hover:rotate-90 transition-transform">add</span>
-            Schedule New Session
-        </Button>
-    </div>
-    <section class="mb-16">
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<div class="px-6 md:px-20 py-10 w-full max-w-[1920px] mx-auto flex flex-col gap-12 animate-fade-in">
+    @* Header Section *@
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-10">
+        <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-3 text-primary font-bold text-sm tracking-widest uppercase">
+                <span class="w-8 h-[2px] bg-primary"></span>
+                Agenda
             </div>
-            <h3 class="text-[20px] font-bold text-slate-800 tracking-tight">Upcoming Sessions</h3>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none">
+                Suas <span class="text-primary">Consultas</span>
+            </h1>
+            <p class="text-slate-500 text-lg font-medium max-w-xl">
+                Acompanhe seus agendamentos, visualize o histórico e conecte-se com seus especialistas.
+            </p>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            @foreach (var session in UpcomingSessions)
+        @if (SessionService.IsLoggedIn && _appointments.Any())
+        {
+            <Button OnClick="@(() => NavManager.NavigateTo("/psicologos"))" Variant="EButtonVariant.Primary" CssClass="!h-14 px-8 shadow-lg shadow-primary/20">
+                <span class="material-symbols-outlined mr-2">add</span>
+                Novo Agendamento
+            </Button>
+        }
+    </div>
+
+    @* Content Section *@
+    @if (!SessionService.IsLoggedIn)
+    {
+        <div class="flex flex-col items-center justify-center py-20 bg-white rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/50">
+            <div class="w-24 h-24 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mb-8">
+                <span class="material-symbols-outlined text-5xl">lock</span>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">Acesso Restrito</h3>
+            <p class="text-slate-500 mb-8 text-center max-w-xs">Faça login para gerenciar suas consultas e acessar suas sessões.</p>
+            <Button OnClick="@(() => NavManager.NavigateTo("/login"))" Variant="EButtonVariant.Primary" CssClass="px-12 h-14">Entrar Agora</Button>
+        </div>
+    }
+    else if (_isLoading)
+    {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @for (int i = 0; i < 3; i++)
             {
-                <AppointmentCard Session="session" OnJoin="HandleJoinSession" />
+                <div class="h-64 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm animate-pulse flex flex-col p-8 gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full"></div>
+                        <div class="flex-1 space-y-2">
+                            <div class="h-4 bg-slate-100 rounded w-3/4"></div>
+                            <div class="h-3 bg-slate-100 rounded w-1/2"></div>
+                        </div>
+                    </div>
+                    <div class="h-10 bg-slate-50 rounded-2xl w-full mt-4"></div>
+                </div>
             }
         </div>
-    </section>
-    <section>
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
-                <span class="material-symbols-outlined text-[18px]">history</span>
+    }
+    else if (!_appointments.Any())
+    {
+        <div class="relative overflow-hidden bg-white rounded-[3.5rem] p-12 md:p-24 border border-slate-100 shadow-2xl shadow-slate-200/40 flex flex-col items-center text-center">
+            @* Decorative background elements *@
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10">
+                <div class="w-24 h-24 rounded-[2rem] bg-slate-50 text-slate-300 flex items-center justify-center mb-10 mx-auto rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                    <span class="material-symbols-outlined text-6xl">calendar_today</span>
+                </div>
+                
+                <h3 class="text-3xl md:text-4xl font-black text-slate-800 mb-4 tracking-tight">Sua agenda está vazia</h3>
+                <p class="text-slate-500 text-lg font-medium max-w-md mx-auto mb-12 leading-relaxed">
+                    Ainda não encontramos nenhum agendamento. Que tal começar sua jornada cuidando da sua saúde mental hoje?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Button OnClick="@(() => NavManager.NavigateTo("/psicologos"))" Variant="EButtonVariant.Primary" CssClass="px-12 h-16 shadow-xl shadow-primary/25 text-lg">
+                        Encontrar Psicólogo
+                    </Button>
+                    <Button OnClick="@(() => NavManager.NavigateTo("/dashboard"))" Variant="EButtonVariant.Secondary" CssClass="px-12 h-16 text-lg">
+                        Voltar ao Início
+                    </Button>
+                </div>
             </div>
-            <h3 class="text-[20px] font-bold text-slate-800 tracking-tight">Past Sessions</h3>
         </div>
-        
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="divide-y divide-slate-100">
-                @foreach (var session in PastSessions)
-                {
-                    <AppointmentItem Session="session" />
-                }
-            </div>
-            <div class="p-4 bg-slate-50 border-t border-slate-100 text-center">
-                <button class="text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors">
-                    Load More History
-                </button>
-            </div>
+    }
+    else
+    {
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            @foreach (var appointment in _appointments)
+            {
+                <div class="hover:scale-[1.02] transition-all duration-300">
+                    <AppointmentCard Appointment="@appointment" />
+                </div>
+            }
         </div>
-    </section>
+    }
 </div>
 
 @code {
-    private List<SessionModel> UpcomingSessions = new();
-    private List<SessionModel> PastSessions = new();
+    private List<Appointment> _appointments = new();
+    private bool _isLoading = true;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        var drJenkins = new PsychologistModel 
-        { 
-            Id = 1, 
-            Name = "Dr. Sarah Jenkins", 
-            Specialty = "Cognitive Behavioral Therapy", 
-            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAtxw-7JspiCQOKAYHKH0Oj04uEHVFkH9gqaakg3OcDaW6uu2vt1zp9PPado3yBSWmFboc8o6Xf2T9eMH3s2fxS8S8uNdhaQfohfoP4LIzLo0nEpVvrhHySMdXudAZQNvSU9h3v3FdlptaB3YmqB1H26NQprXWaO8CqnceJUhZ0NT-Jjt7dRnaIsOmA7XY6VMTNE4rAIsNDS4P9AhttLXrqYGZ7szgujmbLf9gpxZ4F4XYA9g0mgw48ocC0Nm4qLhGqIazAu9S_yPCY" 
-        };
-        
-        var drWei = new PsychologistModel 
-        { 
-            Id = 2, 
-            Name = "Dr. Marcus Wei", 
-            Specialty = "Mindfulness Coaching", 
-            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuD8iksHpEO2Z0d4ii2EkacLrUX5htPtX0QGJpSHsDfLsAZ3fssLUdOQYarF5_fjOC_lhNNUUiuBoLq97uvxGzw8yopStzKHP_K1tCEN6WQ0TWqDTiWd-SGTyYQPS6UkX37iZabU_ymGmgu7tRo94-yI9HlnJ--AgOFccUg8PJqBESUS6k98DO1b1yXiAhtmTYNy1jjix-SxbIXEXqexVYqOkjw_FQPju1o8vHBavKnQm3iiMNzZ4whjlxtECC0MJXg58aBtBjWXJxPX" 
-        };
-
-        var drChen = new PsychologistModel 
-        { 
-            Id = 3, 
-            Name = "Dr. Emily Chen", 
-            Specialty = "Stress Management", 
-            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAyx3p-9C0P-89S8g-pUl0vUOD90GJYvmXFokuKanTf4tW_yVKZHNxwEQ0D-ZZT3gpq9ZJVoy1QxcQFa_9sBOyLJc0UO8OxewpKPxCbKWreG90SoUb6I3tUfwQUI2knjR0a94gDbjuZgEqIPp9Gq14BcGATVo8drRngqtKNkKelC6H6vwHPcK7gOlNIafrgB-kWc9RzXihsExgnN_Qlz5uKdPjnjl-UNaz42wN9su4ZWzeXZAeuepexm7sqao4vn7FcW_mObLj0e7TA" 
-        };
-
-        UpcomingSessions = new List<SessionModel>
+        if (!SessionService.IsLoggedIn)
         {
-            new SessionModel 
-            { 
-                Id = 101, 
-                Psychologist = drJenkins, 
-                Date = DateTime.Now.AddDays(1), 
-                StartTime = new TimeSpan(10, 0, 0), 
-                EndTime = new TimeSpan(10, 45, 0), 
-                StatusLabel = "Tomorrow" 
-            },
-            new SessionModel 
-            { 
-                Id = 102, 
-                Psychologist = drWei, 
-                Date = DateTime.Now.AddDays(3), 
-                StartTime = new TimeSpan(14, 30, 0), 
-                EndTime = new TimeSpan(15, 15, 0), 
-                StatusLabel = "In 3 Days" 
-            }
-        };
+            _isLoading = false;
+            return;
+        }
 
-        PastSessions = new List<SessionModel>
+        try
         {
-            new SessionModel { Id = 50, Psychologist = drJenkins, Date = DateTime.Now.AddDays(-7), Status = "Completed", IsCompleted = true },
-            new SessionModel { Id = 49, Psychologist = drChen, Date = DateTime.Now.AddDays(-15), Status = "Completed", IsCompleted = true }
-        };
-    }
-
-    private void HandleJoinSession(int sessionId)
-    {
+            var userId = SessionService.CurrentUser!.Id;
+            var all = await AppointmentService.GetAllAsync();
+            
+            _appointments = all
+                .Where(a => a.PatientId == userId)
+                .OrderBy(a => a.Date)
+                .ThenBy(a => a.StartTime)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao carregar consultas: {ex.Message}");
+        }
+        finally
+        {
+            _isLoading = false;
+        }
     }
 }

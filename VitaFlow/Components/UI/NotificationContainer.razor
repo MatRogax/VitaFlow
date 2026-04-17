@@ -1,0 +1,69 @@
+@using projeto_carlos.Enums
+@using projeto_carlos.Common.Extensions
+@using projeto_carlos.Services
+@implements IDisposable
+@inject NotificationService NotificationService
+
+@if (_isVisible)
+{
+    <div class="fixed top-8 left-1/2 -translate-x-1/2 z-[9999] min-w-[320px] max-w-[90vw] animate-in slide-in-from-top-4 fade-in duration-300">
+        <div class="relative flex items-center gap-4 p-4 rounded-2xl border shadow-2xl backdrop-blur-md @_type.GetStyles()">
+            @* Accent color stripe *@
+            <div class="absolute inset-y-2 left-2 w-1 rounded-full @_type.GetAccentColor()"></div>
+            
+            <div class="flex-shrink-0 ml-1">
+                <span class="material-symbols-outlined text-2xl">@_type.GetIcon()</span>
+            </div>
+            
+            <div class="flex-1 pr-8">
+                <p class="text-sm font-bold leading-tight">@_message</p>
+            </div>
+            
+            <button @onclick="Hide" class="absolute top-4 right-4 text-current opacity-50 hover:opacity-100 transition-opacity">
+                <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    private bool _isVisible = false;
+    private string _message = string.Empty;
+    private ENotificationType _type = ENotificationType.Info;
+
+    protected override void OnInitialized()
+    {
+        NotificationService.OnShow += Show;
+        NotificationService.OnHide += Hide;
+
+        if (NotificationService.PendingNotification != null)
+        {
+            var pending = NotificationService.PendingNotification.Value;
+            NotificationService.ClearPending();
+            
+            _message = pending.Message;
+            _type = pending.Type;
+            _isVisible = true;
+        }
+    }
+
+    private void Show(string message, ENotificationType type)
+    {
+        _message = message;
+        _type = type;
+        _isVisible = true;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void Hide()
+    {
+        _isVisible = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        NotificationService.OnShow -= Show;
+        NotificationService.OnHide -= Hide;
+    }
+}

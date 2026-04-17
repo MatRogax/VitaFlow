@@ -1,0 +1,165 @@
+@page "/diario/novo"
+@using projeto_carlos.Components.UI
+@using projeto_carlos.Enums
+@using projeto_carlos.Models.Entities
+@using projeto_carlos.Services.Interfaces
+@inject IJournalService JournalService
+@inject NavigationManager NavManager
+
+<div class="max-w-[1920px] mx-auto py-10 px-6 animate-fade-in flex flex-col items-center">
+    <div class="w-full flex justify-start mb-8">
+        <button @onclick="@(() => NavManager.NavigateTo("/diario"))" class="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-medium text-sm">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            Voltar para o Diário
+        </button>
+    </div>
+
+    <div class="text-center mb-12">
+        <h1 class="text-slate-900 dark:text-white text-4xl font-black tracking-tight mb-3">Olá, como você está se sentindo hoje?</h1>
+        <p class="text-slate-500 dark:text-slate-400 text-base">Reserve um momento para registrar suas emoções.</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-12 w-full">
+        @foreach (var emotion in Emotions)
+        {
+            <EmotionCard
+                Label="@emotion.Label"
+                IsActive="@(SelectedEmotion == emotion.Label)"
+                OnSelect="() => SelectEmotion(emotion.Label)">
+                <Icon>
+                    <span class="material-symbols-outlined text-4xl">@emotion.Icon</span>
+                </Icon>
+            </EmotionCard>
+        }
+    </div>
+
+    <div class="w-full max-w-2xl space-y-8 mb-12">
+        <div class="space-y-2">
+            <label class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold text-sm">
+                <span class="material-symbols-outlined text-primary text-xl">label</span>
+                Título do registro
+            </label>
+            <input @bind="JournalTitle" 
+                   placeholder="Dê um título para o seu dia..." 
+                   class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-700 dark:text-slate-200" />
+        </div>
+
+        <div class="space-y-2">
+            <label class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold text-sm">
+                <span class="material-symbols-outlined text-primary text-xl">notes</span>
+                Diário do dia (opcional)
+            </label>
+            <textarea @bind="JournalText" 
+                      placeholder="O que está em sua mente? Descreva como foi o seu dia..." 
+                      rows="6"
+                      class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-700 dark:text-slate-200 resize-none"></textarea>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl mb-12">
+        <h3 class="text-slate-900 dark:text-white text-lg font-bold mb-4">O que você fez hoje?</h3>
+        <div class="flex flex-wrap gap-3">
+            @foreach (var activity in Activities)
+            {
+                <ActivityTag
+                    Label="@activity.Label"
+                    IsActive="@SelectedActivities.Contains(activity.Label)"
+                    OnSelect="() => ToggleActivity(activity.Label)">
+                    <Icon>
+                        <span class="material-symbols-outlined text-xl">@activity.Icon</span>
+                    </Icon>
+                </ActivityTag>
+            }
+        </div>
+    </div>
+
+    <div class="w-full max-w-md flex flex-col items-center gap-4">
+        <button @onclick="SaveJournal" disabled="@_isSaving" class="w-full bg-primary hover:bg-primary/90 text-white rounded-2xl py-4 px-8 font-bold text-lg transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 disabled:opacity-50">
+            @if (_isSaving)
+            {
+                <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            }
+            else
+            {
+                <span class="material-symbols-outlined">save</span>
+                <span>Salvar Registro</span>
+            }
+        </button>
+        <p class="text-slate-400 text-xs font-medium">Seu registro ficará salvo em sua jornada de bem-estar.</p>
+    </div>
+</div>
+
+@code {
+    private string SelectedEmotion { get; set; } = "Neutro";
+    private string JournalTitle { get; set; } = string.Empty;
+    private string JournalText { get; set; } = string.Empty;
+    private HashSet<string> SelectedActivities { get; set; } = new();
+    private bool _isSaving = false;
+
+    private readonly List<(string Label, string Icon)> Emotions = new()
+    {
+        ("Muito Triste", "sentiment_very_dissatisfied"),
+        ("Triste", "sentiment_dissatisfied"),
+        ("Neutro", "sentiment_neutral"),
+        ("Feliz", "sentiment_satisfied"),
+        ("Muito Feliz", "sentiment_very_satisfied")
+    };
+
+    private readonly List<(string Label, string Icon)> Activities = new()
+    {
+        ("Exercício", "fitness_center"),
+        ("Trabalho", "work"),
+        ("Família", "diversity_3"),
+        ("Hobby", "palette"),
+        ("Boa comida", "restaurant")
+    };
+
+    private void SelectEmotion(string emotion)
+    {
+        SelectedEmotion = emotion;
+    }
+
+    private void ToggleActivity(string activity)
+    {
+        if (SelectedActivities.Contains(activity))
+        {
+            SelectedActivities.Remove(activity);
+        }
+        else
+        {
+            SelectedActivities.Add(activity);
+        }
+    }
+
+    private async Task SaveJournal()
+    {
+        if (_isSaving) return;
+
+        if (string.IsNullOrEmpty(JournalTitle))
+        {
+            JournalTitle = "Novo Registro " + DateTime.Now.ToString("dd/MM");
+        }
+
+        _isSaving = true;
+
+        try 
+        {
+            var newEntry = new projeto_carlos.Models.Entities.Journal
+            {
+                Title = JournalTitle,
+                Emotion = SelectedEmotion,
+                Text = JournalText,
+                Activities = SelectedActivities.ToList(),
+                Date = DateTime.Now
+            };
+            
+            await JournalService.CreateAsync(newEntry);
+            
+            NavManager.NavigateTo("/diario");
+        }
+        finally 
+        {
+            _isSaving = false;
+        }
+    }
+}

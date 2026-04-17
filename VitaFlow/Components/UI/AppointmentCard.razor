@@ -1,92 +1,56 @@
 @using projeto_carlos.Models.Entities
-@using projeto_carlos.Enums
 
-<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-    <!-- Decorative Orb -->
-    <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors duration-500"></div>
-    
-    <div class="flex items-start gap-5 relative z-10">
-        @if (!string.IsNullOrEmpty(Session.Psychologist.ImageUrl))
-        {
-            <img src="@Session.Psychologist.ImageUrl" 
-                 alt="@Session.Psychologist.Name" 
-                 class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-sm" />
-        }
-        else
-        {
-            <div class="w-16 h-16 rounded-full @Session.Psychologist.Avatar flex items-center justify-center text-white text-xl font-bold border-2 border-white shadow-sm">
-                @GetInitials(Session.Psychologist.Name)
-            </div>
-        }
+<div class="bg-white dark:bg-slate-900 rounded-[2rem] p-8 flex flex-col shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 group">
+    <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full @(Session.Status == "Confirmado" ? "bg-green-500" : "bg-blue-500") pulse-animation"></span>
+            <span class="text-[11px] font-black uppercase tracking-widest text-slate-400">@Session.Status</span>
+        </div>
+        <button class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-lg">more_horiz</span>
+        </button>
+    </div>
 
-        <div class="flex-1">
-            <div class="flex justify-between items-start mb-1">
-                <div>
-                    <h4 class="font-bold text-lg text-slate-800 tracking-tight">@Session.Psychologist.Name</h4>
-                    <p class="text-sm text-primary font-medium">@Session.Psychologist.Specialty</p>
-                </div>
-                
-                @if (!string.IsNullOrEmpty(Session.StatusLabel))
-                {
-                    <span class="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                        @Session.StatusLabel
-                    </span>
-                }
-            </div>
-
-            <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-slate-500 text-sm">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px]">event</span>
-                    <span>@Session.Date.ToString("MMM dd, yyyy")</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px]">schedule</span>
-                    <span>@Session.StartTime.ToString(@"hh\:mm") - @Session.EndTime.ToString(@"hh\:mm")</span>
+    <div class="flex flex-col gap-6">
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <img src="@Session.Psychologist.ImageUrl" 
+                     class="w-14 h-14 rounded-2xl object-cover ring-4 ring-slate-50 dark:ring-slate-800" />
+                <div class="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-lg flex items-center justify-center border-2 border-white dark:border-slate-900">
+                    <span class="material-symbols-outlined text-[10px] text-white">verified</span>
                 </div>
             </div>
-
-            <div class="mt-6">
-                @if (Session.CanJoin)
-                {
-                    <Button Variant="EButtonVariant.Primary" CssClass="w-full sm:w-auto" OnClick="OnJoinClick">
-                        <span class="material-symbols-outlined text-[18px] mr-2">videocam</span>
-                        Join Session
-                    </Button>
-                }
-                else
-                {
-                    <Button Variant="EButtonVariant.Primary" Disabled="true" CssClass="w-full sm:w-auto opacity-50 cursor-not-allowed">
-                        <span class="material-symbols-outlined text-[18px] mr-2">lock</span>
-                        Join Session
-                    </Button>
-                }
+            <div>
+                <h4 class="font-bold text-slate-900 dark:text-white leading-tight">@Session.Psychologist.Name</h4>
+                <p class="text-xs text-slate-500 font-medium">@Session.Psychologist.Specialty</p>
             </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 border border-slate-100 dark:border-slate-800">
+                <span class="text-[10px] font-bold text-slate-400 block mb-1 uppercase tracking-wider">Data</span>
+                <span class="text-sm font-black text-slate-700 dark:text-slate-200">@Session.Date.ToString("dd MMM, yyyy")</span>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 border border-slate-100 dark:border-slate-800">
+                <span class="text-[10px] font-bold text-slate-400 block mb-1 uppercase tracking-wider">Horário</span>
+                <span class="text-sm font-black text-slate-700 dark:text-slate-200">@Session.StartTime.ToString(@"hh\:mm")</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 pt-8 border-t border-slate-50 dark:border-slate-800">
+        <div class="grid grid-cols-2 gap-4">
+            <button class="bg-primary text-white rounded-xl py-4 font-bold text-sm shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                Entrar na Chamada
+            </button>
+            <button class="bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-300 rounded-xl py-4 font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
+                Reagendar
+            </button>
         </div>
     </div>
 </div>
 
 @code {
     [Parameter, EditorRequired]
-    public SessionModel Session { get; set; } = default!;
-
-    [Parameter]
-    public EventCallback<int> OnJoin { get; set; }
-
-    private async Task OnJoinClick()
-    {
-        if (OnJoin.HasDelegate)
-        {
-            await OnJoin.InvokeAsync(Session.Id);
-        }
-    }
-
-    private string GetInitials(string fullName)
-    {
-        if (string.IsNullOrWhiteSpace(fullName)) return "";
-        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var realName = parts.Where(p => !p.StartsWith("Dr")).ToArray();
-        if (realName.Length == 0) return "";
-        if (realName.Length == 1) return realName[0].Substring(0, 1).ToUpper();
-        return (realName[0].Substring(0, 1) + realName[1].Substring(0, 1)).ToUpper();
-    }
+    public Appointment Session { get; set; } = default!;
 }

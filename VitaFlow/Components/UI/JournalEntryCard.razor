@@ -1,4 +1,4 @@
-@using projeto_carlos.Models
+@using projeto_carlos.Models.Entities
 @namespace projeto_carlos.Components.UI
 
 <article class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow cursor-pointer group">
@@ -45,7 +45,7 @@
 </article>
 
 @code {
-    [Parameter] public JournalEntry Entry { get; set; } = new();
+    [Parameter] public Journal Entry { get; set; } = new();
 
     private string GetEmotionClasses()
     {

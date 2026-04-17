@@ -1,177 +1,194 @@
-@page "/agendar-sessao/{PsychologistId:int}"
+@page "/agendar-sessao/{PsychologistId:guid}"
 @using projeto_carlos.Components.UI
 @using projeto_carlos.Models.Entities
 @using projeto_carlos.Models
 @using projeto_carlos.Enums
+@using projeto_carlos.Services.Interfaces
+@inject IPsychologistService PsychologistService
 @inject NavigationManager NavManager
 
 <div class="px-6 md:px-20 py-10 w-full max-w-[1920px] mx-auto flex flex-col gap-10">
-    <div>
-        <h1 class="text-3xl font-black text-slate-900 tracking-tight">Agendar Nova Sessão</h1>
-        <p class="text-slate-500 font-medium">Escolha o melhor horário para o seu acompanhamento.</p>
-    </div>
-    <div class="flex items-center gap-4 max-w-2xl">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-blue-100 text-primary flex items-center justify-center">
-                <span class="material-symbols-outlined text-[18px]">check</span>
-            </div>
-            <span class="text-sm font-bold text-slate-800">Profissional</span>
+    @if (_isLoading)
+    {
+        <div class="flex justify-center py-20">
+            <div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
-        <div class="h-px bg-slate-200 flex-1"></div>
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20">
-                2
-            </div>
-            <span class="text-sm font-bold text-slate-800">Data & Hora</span>
+    }
+    else if (_psychologist == null)
+    {
+        <div class="text-center py-20">
+            <h2 class="text-2xl font-bold text-slate-800">Profissional não encontrado</h2>
+            <button @onclick="@(() => NavManager.NavigateTo("/psicologos"))" class="mt-4 text-primary font-bold">Voltar para a lista</button>
         </div>
-        <div class="h-px bg-slate-200 flex-1"></div>
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center font-bold text-sm">
-                3
-            </div>
-            <span class="text-sm font-bold text-slate-400">Confirmação</span>
+    }
+    else
+    {
+        <div>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Agendar Nova Sessão</h1>
+            <p class="text-slate-500 font-medium">Escolha o melhor horário para o seu acompanhamento.</p>
         </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-        <div class="lg:col-span-2 flex flex-col gap-8">
-            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex items-center justify-between group">
-                <div class="flex items-center gap-4">
-                    <img src="@_psychologist.ImageUrl" class="w-14 h-14 rounded-full object-cover border-2 border-slate-50" alt="@_psychologist.Name" />
-                    <div>
-                        <span class="text-[10px] font-black text-primary uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">Selecionada</span>
-                        <h4 class="text-lg font-bold text-slate-900">@_psychologist.Name</h4>
-                        <p class="text-sm text-slate-500 font-medium">@_psychologist.Specialty</p>
-                    </div>
+        <div class="flex items-center gap-4 max-w-2xl">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">check</span>
                 </div>
-                <button @onclick="@(() => NavManager.NavigateTo("/psicologos"))" class="text-sm font-bold text-primary hover:underline">Alterar</button>
+                <span class="text-sm font-bold text-slate-800">Profissional</span>
             </div>
+            <div class="h-px bg-slate-200 flex-1"></div>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20">
+                    2
+                </div>
+                <span class="text-sm font-bold text-slate-800">Data & Hora</span>
+            </div>
+            <div class="h-px bg-slate-200 flex-1"></div>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center font-bold text-sm">
+                    3
+                </div>
+                <span class="text-sm font-bold text-slate-400">Confirmação</span>
+            </div>
+        </div>
 
-            <div class="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
-                <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-xl font-bold text-slate-800">Selecione uma Data</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+            <div class="lg:col-span-2 flex flex-col gap-8">
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex items-center justify-between group">
                     <div class="flex items-center gap-4">
-                        <button class="p-2 hover:bg-slate-50 rounded-full text-slate-400"><span class="material-symbols-outlined">chevron_left</span></button>
-                        <span class="font-bold text-slate-800">Outubro 2023</span>
-                        <button class="p-2 hover:bg-slate-50 rounded-full text-slate-400"><span class="material-symbols-outlined">chevron_right</span></button>
+                        @if (!string.IsNullOrEmpty(_psychologist.ImageUrl))
+                        {
+                            <img src="@_psychologist.ImageUrl" class="w-14 h-14 rounded-full object-cover border-2 border-slate-50" alt="@_psychologist.Name" />
+                        }
+                        else
+                        {
+                            <div class="w-14 h-14 rounded-full @_psychologist.Avatar flex items-center justify-center text-white font-bold border-2 border-slate-50">
+                                @GetInitials(_psychologist.Name)
+                            </div>
+                        }
+                        <div>
+                            <span class="text-[10px] font-black text-primary uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">Selecionado(a)</span>
+                            <h4 class="text-lg font-bold text-slate-900">@_psychologist.Name</h4>
+                            <p class="text-sm text-slate-500 font-medium">@_psychologist.Specialty</p>
+                        </div>
+                    </div>
+                    <button @onclick="@(() => NavManager.NavigateTo("/psicologos"))" class="text-sm font-bold text-primary hover:underline">Alterar</button>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-xl font-bold text-slate-800">Selecione uma Data</h3>
+                        <div class="flex items-center gap-4">
+                            <button class="p-2 hover:bg-slate-50 rounded-full text-slate-400"><span class="material-symbols-outlined">chevron_left</span></button>
+                            <span class="font-bold text-slate-800">Abril 2026</span>
+                            <button class="p-2 hover:bg-slate-50 rounded-full text-slate-400"><span class="material-symbols-outlined">chevron_right</span></button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-7 text-center mb-4">
+                        @foreach (var day in new[] { "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb" })
+                        {
+                            <div class="text-[11px] font-bold text-slate-400 uppercase py-2">@day</div>
+                        }
+                    </div>
+                    <div class="grid grid-cols-7 gap-2">
+                        @for (int i = 1; i <= 30; i++)
+                        {
+                            var dayValue = i;
+                            var isSelected = dayValue == _selectedDay;
+                            <button @onclick="@(() => _selectedDay = dayValue)"
+                                    class="aspect-square flex flex-col items-center justify-center rounded-2xl transition-all relative
+                                           @(isSelected ? "bg-primary text-white shadow-xl shadow-primary/30" : "hover:bg-slate-50 text-slate-700 font-medium")">
+                                <span class="text-sm">@dayValue</span>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Horários Disponíveis</h3>
+                    <p class="text-sm text-slate-400 mb-6 font-medium">Dia @_selectedDay de Abril</p>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        @foreach (var slot in _timeSlots)
+                        {
+                            <button @onclick="@(() => SelectTime(slot))"
+                                    class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 transition-all font-bold text-sm
+                                           @(slot.IsSelected ? "border-primary bg-blue-50 text-primary" : "border-slate-50 bg-slate-50/50 text-slate-800 hover:border-slate-200")
+                                           @(slot.IsAvailable ? "" : "opacity-30 cursor-not-allowed")">
+                                <span class="material-symbols-outlined text-[18px]">@(slot.IsSelected ? "check_circle" : "schedule")</span>
+                                @slot.Time.ToString(@"hh\:mm")
+                            </button>
+                        }
                     </div>
                 </div>
 
-                <div class="grid grid-cols-7 text-center mb-4">
-                    @foreach (var day in new[] { "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb" })
-                    {
-                        <div class="text-[11px] font-bold text-slate-400 uppercase py-2">@day</div>
-                    }
-                </div>
-                <div class="grid grid-cols-7 gap-2">
-                    @for (int i = 1; i <= 31; i++)
-                    {
-                        var dayValue = i;
-                        var isSelected = dayValue == 9;
-                        var isToday = dayValue == 10;
-                        <button @onclick="@(() => _selectedDay = dayValue)"
-                                class="aspect-square flex flex-col items-center justify-center rounded-2xl transition-all relative
-                                       @(isSelected ? "bg-primary text-white shadow-xl shadow-primary/30" : "hover:bg-slate-50 text-slate-700 font-medium")">
-                            <span class="text-sm">@dayValue</span>
-                            @if (i == 10 || i == 11)
-                            {
-                                <span class="w-1 h-1 rounded-full @(isSelected ? "bg-white" : "bg-primary") absolute bottom-2"></span>
-                            }
-                        </button>
-                    }
+                <div class="bg-blue-50/50 rounded-3xl p-8 border border-blue-50 flex flex-col gap-6">
+                    <h3 class="text-[11px] font-black text-primary uppercase tracking-widest">Resumo do Agendamento</h3>
+                    
+                    <div class="flex flex-col gap-5">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
+                                <span class="material-symbols-outlined">calendar_today</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase">Data</p>
+                                <p class="text-sm font-bold text-slate-800">@_selectedDay de Abril, 2026</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
+                                <span class="material-symbols-outlined">schedule</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase">Horário</p>
+                                <p class="text-sm font-bold text-slate-800">@(_selectedTime?.ToString(@"hh\:mm") ?? "--:--")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Button Variant="EButtonVariant.Primary" CssClass="w-full !py-4 rounded-2xl shadow-xl shadow-primary/20 group" OnClick="ConfirmAppointment">
+                        <span>Confirmar Agendamento</span>
+                        <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </Button>
                 </div>
             </div>
         </div>
-
-        <div class="flex flex-col gap-6">
-            <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
-                <h3 class="text-lg font-bold text-slate-800 mb-2">Horários Disponíveis</h3>
-                <p class="text-sm text-slate-400 mb-6 font-medium">Quarta-feira, 9 de Outubro</p>
-
-                <div class="grid grid-cols-2 gap-3">
-                    @foreach (var slot in _timeSlots)
-                    {
-                        <button @onclick="@(() => SelectTime(slot))"
-                                class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 transition-all font-bold text-sm
-                                       @(slot.IsSelected ? "border-primary bg-blue-50 text-primary" : "border-slate-50 bg-slate-50/50 text-slate-800 hover:border-slate-200")
-                                       @(slot.IsAvailable ? "" : "opacity-30 cursor-not-allowed")">
-                            <span class="material-symbols-outlined text-[18px]">@(slot.IsSelected ? "check_circle" : "schedule")</span>
-                            @slot.Time.ToString(@"hh\:mm")
-                        </button>
-                    }
-                </div>
-            </div>
-
-            <div class="bg-blue-50/50 rounded-3xl p-8 border border-blue-50 flex flex-col gap-6">
-                <h3 class="text-[11px] font-black text-primary uppercase tracking-widest">Resumo do Agendamento</h3>
-                
-                <div class="flex flex-col gap-5">
-                    <div class="flex items-start gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
-                            <span class="material-symbols-outlined">calendar_today</span>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase">Data</p>
-                            <p class="text-sm font-bold text-slate-800">9 de Outubro, 2023</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
-                            <span class="material-symbols-outlined">schedule</span>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase">Horário</p>
-                            <p class="text-sm font-bold text-slate-800">10:30 - 11:20 (50 min)</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
-                            <span class="material-symbols-outlined">video_camera_front</span>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase">Modalidade</p>
-                            <p class="text-sm font-bold text-slate-800">Videoconferência</p>
-                        </div>
-                    </div>
-                </div>
-
-                <Button Variant="EButtonVariant.Primary" CssClass="w-full !py-4 rounded-2xl shadow-xl shadow-primary/20 group">
-                    <span>Confirmar Agendamento</span>
-                    <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </Button>
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
 @code {
-    [Parameter] public int PsychologistId { get; set; }
+    [Parameter] public Guid PsychologistId { get; set; }
     
-    private int _selectedDay = 9;
-    private PsychologistModel _psychologist = new();
+    private int _selectedDay = DateTime.Now.Day;
+    private Psychologist? _psychologist;
     private List<TimeSlot> _timeSlots = new();
+    private TimeSpan? _selectedTime;
+    private bool _isLoading = true;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _psychologist = new PsychologistModel 
-        { 
-            Id = PsychologistId, 
-            Name = "Dra. Sarah Jenkins", 
-            Specialty = "Psicóloga Clínica • TCC",
-            ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuAtxw-7JspiCQOKAYHKH0Oj04uEHVFkH9gqaakg3OcDaW6uu2vt1zp9PPado3yBSWmFboc8o6Xf2T9eMH3s2fxS8S8uNdhaQfohfoP4LIzLo0nEpVvrhHySMdXudAZQNvSU9h3v3FdlptaB3YmqB1H26NQprXWaO8CqnceJUhZ0NT-Jjt7dRnaIsOmA7XY6VMTNE4rAIsNDS4P9AhttLXrqYGZ7szgujmbLf9gpxZ4F4XYA9g0mgw48ocC0Nm4qLhGqIazAu9S_yPCY"
-        };
-
-        _timeSlots = new List<TimeSlot>
+        try 
         {
-            new TimeSlot { Time = new TimeSpan(9, 0, 0), IsAvailable = true },
-            new TimeSlot { Time = new TimeSpan(10, 30, 0), IsAvailable = true, IsSelected = true },
-            new TimeSlot { Time = new TimeSpan(14, 0, 0), IsAvailable = true },
-            new TimeSlot { Time = new TimeSpan(15, 30, 0), IsAvailable = true },
-            new TimeSlot { Time = new TimeSpan(16, 0, 0), IsAvailable = true },
-            new TimeSlot { Time = new TimeSpan(17, 0, 0), IsAvailable = false }
-        };
+            _psychologist = await PsychologistService.GetByIdAsync(PsychologistId);
+            
+            // Mock time slots for now
+            _timeSlots = new List<TimeSlot>
+            {
+                new TimeSlot { Time = new TimeSpan(9, 0, 0), IsAvailable = true },
+                new TimeSlot { Time = new TimeSpan(10, 30, 0), IsAvailable = true, IsSelected = true },
+                new TimeSlot { Time = new TimeSpan(14, 0, 0), IsAvailable = true },
+                new TimeSlot { Time = new TimeSpan(15, 30, 0), IsAvailable = true },
+                new TimeSlot { Time = new TimeSpan(16, 0, 0), IsAvailable = true },
+                new TimeSlot { Time = new TimeSpan(17, 0, 0), IsAvailable = false }
+            };
+            _selectedTime = _timeSlots.FirstOrDefault(s => s.IsSelected)?.Time;
+        }
+        finally 
+        {
+            _isLoading = false;
+        }
     }
 
     private void SelectTime(TimeSlot selectedSlot)
@@ -180,5 +197,22 @@
         
         foreach (var slot in _timeSlots) slot.IsSelected = false;
         selectedSlot.IsSelected = true;
+        _selectedTime = selectedSlot.Time;
+    }
+
+    private void ConfirmAppointment()
+    {
+        // For now, just navigate back
+        NavManager.NavigateTo("/consultas");
+    }
+
+    private string GetInitials(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName)) return "";
+        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var realName = parts.Where(p => !p.StartsWith("Dr")).ToArray();
+        if (realName.Length == 0) return "";
+        if (realName.Length == 1) return realName[0].Substring(0, 1).ToUpper();
+        return (realName[0].Substring(0, 1) + realName[1].Substring(0, 1)).ToUpper();
     }
 }

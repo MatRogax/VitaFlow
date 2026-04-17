@@ -4,8 +4,15 @@
 @using projeto_carlos.Components.Layout
 @using projeto_carlos.Enums
 @using projeto_carlos.Models.ViewModels
+@using projeto_carlos.Services.Interfaces
+@using projeto_carlos.Services
 @layout AuthLayout 
 @rendermode InteractiveServer
+
+@inject NavigationManager NavManager
+@inject IAuthService AuthService
+@inject NotificationService NotificationService
+@inject UserSessionService SessionService
 
 <main class="flex-1 flex items-center justify-center p-4 md:p-8 py-12">
     <div class="bg-bg-panel w-full max-w-5xl rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
@@ -45,20 +52,17 @@
                         </Button>
                     </div>
 
-                    @if (!string.IsNullOrEmpty(_errorMessage))
-                    {
-                        <p class="text-red-500 text-sm font-semibold mb-4 text-center">@_errorMessage</p>
-                    }
-
                     <Button Variant="EButtonVariant.Primary" Type="submit" CssClass="w-full h-14" Disabled="@_isLoading">
                         @if (_isLoading)
                         {
-                            <span class="material-symbols-outlined animate-spin mr-2">progress_activity</span>
-                            <span>Acessando...</span>
+                            <div class="flex items-center justify-center gap-3">
+                                <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                <span class="font-bold tracking-tight">Validando informações...</span>
+                            </div>
                         }
                         else
                         {
-                            <span>Entrar</span>
+                            <span class="font-bold">Entrar</span>
                         }
                     </Button>
 
@@ -78,27 +82,34 @@
 </main>
 
 @code {
-    [Inject] 
-    public NavigationManager NavManager { get; set; } = default!;
-    
     private readonly LoginViewModel _loginModel = new();
     private bool _isLoading = false;
-    private string _errorMessage = string.Empty;
 
     private async Task MakeLogin()
     {
-        _errorMessage = string.Empty;
         _isLoading = true;
         
-        await Task.Delay(1200);
-        
-        if (_loginModel.Email == "carlos@gmail.com" && _loginModel.Password == "123")
+        try 
         {
-            NavManager.NavigateTo("/dashboard");
+            var user = await AuthService.LoginAsync(_loginModel);
+            
+            if (user != null)
+            {
+                SessionService.SetUser(user);
+                NotificationService.Notify($"Bem-vindo de volta, {user.Name}!", ENotificationType.Success);
+                NavManager.NavigateTo("/dashboard");
+            }
+            else
+            {
+                NotificationService.Notify("E-mail ou senha inválidos.", ENotificationType.Error);
+            }
         }
-        else
+        catch (Exception)
         {
-            _errorMessage = "E-mail ou senha inválidos.";
+            NotificationService.Notify("Ocorreu um erro ao realizar o login. Tente novamente.", ENotificationType.Error);
+        }
+        finally 
+        {
             _isLoading = false;
         }
     }

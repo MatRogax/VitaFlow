@@ -61,10 +61,10 @@
 @code {
 
     [Parameter, EditorRequired] 
-    public PsychologistModel Psychologist { get; set; } = default!;
+    public Psychologist Psychologist { get; set; } = default!;
     
     [Parameter] 
-    public EventCallback<int> OnSchedule { get; set; }
+    public EventCallback<Guid> OnSchedule { get; set; }
 
     private async Task OnScheduleClick()
     {

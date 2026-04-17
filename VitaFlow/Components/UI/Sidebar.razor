@@ -1,5 +1,7 @@
 @using projeto_carlos.Enums
+@using projeto_carlos.Services
 @inject NavigationManager NavManager
+@inject UserSessionService SessionService
 
 <aside class="w-80 h-screen max-h-screen bg-white border-r border-slate-200 flex flex-col flex-shrink-0 sticky top-0 overflow-y-auto">
     <div class="p-6">
@@ -44,8 +46,12 @@
                     <span class="material-symbols-outlined text-[24px]">person</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-sm font-bold text-slate-800">carlos</span>
-                    <span class="text-xs text-slate-500">Premium</span>
+                    <span class="text-sm font-bold text-slate-800">
+                        @(SessionService.CurrentUser?.Name ?? "Visitante")
+                    </span>
+                    <span class="text-xs text-slate-500">
+                        @(SessionService.CurrentUser?.ProfileType.ToString() ?? "Convidado")
+                    </span>
                 </div>
             </div>
         </div>
@@ -83,6 +89,7 @@
 
     private void HandleLogout()
     {
-        NavManager.NavigateTo("/");
+        SessionService.ClearSession();
+        NavManager.NavigateTo("/login");
     }
 }

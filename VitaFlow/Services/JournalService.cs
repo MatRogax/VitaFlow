@@ -1,25 +1,14 @@
-using projeto_carlos.Models;
+using projeto_carlos.Models.Entities;
+using projeto_carlos.Repositories.Interfaces;
+using projeto_carlos.Services.Interfaces;
+using VitaFlow.Services.Base;
 
-namespace projeto_carlos.Services;
-
-public interface IJournalService
+namespace projeto_carlos.Services
 {
-    IReadOnlyList<JournalEntry> GetEntries();
-    void AddEntry(JournalEntry entry);
-}
-
-public class JournalService : IJournalService
-{
-    private readonly List<JournalEntry> _entries = new();
-
-    public IReadOnlyList<JournalEntry> GetEntries()
+    public class JournalService : ServiceBase<Journal>, IJournalService
     {
-        return _entries.OrderByDescending(e => e.Date).ToList();
-    }
-
-    public void AddEntry(JournalEntry entry)
-    {
-        if (entry == null) throw new ArgumentNullException(nameof(entry));
-        _entries.Add(entry);
+        public JournalService(IJournalRepository repository) : base(repository)
+        {
+        }
     }
 }

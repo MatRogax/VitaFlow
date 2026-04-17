@@ -1,6 +1,6 @@
 @page "/diario"
-@using projeto_carlos.Models
-@using projeto_carlos.Services
+@using projeto_carlos.Models.Entities
+@using projeto_carlos.Services.Interfaces
 @using projeto_carlos.Components.UI
 @inject IJournalService JournalService
 @inject NavigationManager NavManager
@@ -30,7 +30,13 @@
 
     <section class="flex-1 p-8 pt-4 overflow-y-auto">
         <div class="max-w-[1920px] mx-auto space-y-6">
-            @if (!Entries.Any())
+            @if (_isLoading)
+            {
+                <div class="flex justify-center py-12">
+                    <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            }
+            else if (!Entries.Any())
             {
                 <JournalEmptyState OnNewEntry="GoToNew" />
             }
@@ -42,7 +48,7 @@
                 }
             }
 
-            @if (Entries.Any())
+            @if (Entries.Any() && !_isLoading)
             {
                 <div class="flex justify-center py-6">
                     <button class="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold text-sm hover:text-primary transition-colors">
@@ -56,43 +62,20 @@
 </main>
 
 @code {
-    private IReadOnlyList<JournalEntry> Entries = Array.Empty<JournalEntry>();
+    private List<Journal> Entries = new();
+    private bool _isLoading = true;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Entries = JournalService.GetEntries();
-        
-        if (!Entries.Any())
+        try 
         {
-            Entries = new List<JournalEntry>
-            {
-                new JournalEntry 
-                { 
-                    Title = "Um dia de conquistas e paz interior", 
-                    Date = new DateTime(2023, 10, 15), 
-                    Emotion = "Radiante", 
-                    Text = "Hoje comecei o dia com uma meditação de 15 minutos. Senti uma clareza mental incrível durante a reunião de planejamento. Consegui terminar todas as minhas tarefas pendentes e ainda sobrou tempo para uma caminhada no parque ao entardecer...",
-                    Activities = new List<string> { "Produtividade", "Natureza" },
-                    ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuBlq8RQqd1vl3nJXIBvKP9Gc3fwi_1oTopVifqbQoK7ZbBIaqKIOU0xqhQiTZ1RvaCtPm_ACy9cfh_L39mlVAh2nWGS8kUOBkjPM3HAqxHymIdRghBcwiSRl-54s19BXuoXVhx59ai9aVUanKwBBSTBeqkAcsEFqFXLiHZOHO4FKrjcUEkYscWZKDT1ZncxI8rhiO-Vt63p9Z3W1D0wPA9S5Ycgy28GLl2KASp6IHIW7K2lJzZfPXq-UTv5YC-OSpmiP2S6WFYMx5_S"
-                },
-                new JournalEntry 
-                { 
-                    Title = "Momentos de calma e introspecção", 
-                    Date = new DateTime(2023, 10, 14), 
-                    Emotion = "Calmo", 
-                    Text = "O dia foi silencioso. Aproveitei a chuva para colocar as leituras em dia. Senti uma leve melancolia no início da tarde, mas o chá de camomila e a música ambiente ajudaram a equilibrar os sentimentos.",
-                    Activities = new List<string> { "Leitura", "Chuva" },
-                    ImageUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuDIBeSZnWNY1OeDeFznPU6iUv0jMrnZLTRsVZKleIaeI49EiVivBoNDPWGi9E0RbDeF152XJUXNAkh6eKAlxmpicc73c67tuneZ6yQPG94JmstyryPtBj6qq5ohnwWkS7yDtQwOzYsMGCT6Vbs4uXEOcrz0DzBZr05pqyCSnCuMMCmUq_s-c741YKS0xuawmNtXPzbASKP8uq3TKEM6hBzyL3E9HAXYL1btI1fpy_oUWP7RVmhrfofcR2qqIiNxN-BoKSf5m1OysxUu"
-                },
-                new JournalEntry 
-                { 
-                    Title = "Lidando com o estresse do trabalho", 
-                    Date = new DateTime(2023, 10, 13), 
-                    Emotion = "Cansado", 
-                    Text = " Muitos prazos convergindo hoje. Senti uma ponta de ansiedade antes do almoço. Tentei as técnicas de respiração 4-7-8 que o app sugeriu e realmente ajudaram a baixar o ritmo cardíaco.",
-                    Activities = new List<string> { "Trabalho", "Respiração" }
-                }
-            };
+            Entries = await JournalService.GetAllAsync();
+            // Optional: Sort by date descending if the service doesn't do it
+            Entries = Entries.OrderByDescending(e => e.Date).ToList();
+        }
+        finally 
+        {
+            _isLoading = false;
         }
     }
 
